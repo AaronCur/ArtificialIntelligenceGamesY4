@@ -1,6 +1,6 @@
 /// <summary>
-/// @mainpage BeepBoop
-/// @Authors D.J. O'Leary
+/// @mainpage AI LAB 1
+/// @Authors Aaron Curry
 /// @Version 1.0
 /// @brief 
 /// </summary>

@@ -69,27 +69,25 @@ void Player::update(double dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		//right key is pressed: move our character
+
 		increaseRotation();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		// left key is pressed: move our character
+		
 		decreaseRotation();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		// up key is pressed: move our character
+		
 		speedUp();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		//down key is pressed: move our character
 		speedDown();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		//space key is pressed: move our character
 		m_velocity.x = 0;
 		m_velocity.y = 0;
 	}
