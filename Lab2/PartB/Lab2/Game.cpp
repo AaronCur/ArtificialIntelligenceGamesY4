@@ -50,7 +50,8 @@ void Game::run()
 void Game::update(double dt)
 {
 	m_player->update(dt);
-	m_enemy->update();
+	m_enemy->update(m_player->getPosition());
+	
 }
 
 /// <summary>

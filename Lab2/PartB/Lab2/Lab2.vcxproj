@@ -153,6 +153,7 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Enemy.png" />
     <Image Include="Player.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

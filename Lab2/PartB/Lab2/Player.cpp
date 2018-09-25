@@ -26,6 +26,11 @@ Player::~Player()
 
 }
 
+sf::Vector2f Player::getPosition()
+{
+	return m_sprite.getPosition();
+}
+
 void Player::speedUp()
 {
 	if (m_speed < m_maxSpeed)
