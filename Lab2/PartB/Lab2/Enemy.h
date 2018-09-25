@@ -21,6 +21,7 @@ private:
 	float m_rotation;
 	float m_velocityF;
 	float m_maxSpeed;
+	float m_maxRotation;
 	sf::Sprite m_sprite;
 	sf::Texture m_texture;
 	sf::CircleShape shape;

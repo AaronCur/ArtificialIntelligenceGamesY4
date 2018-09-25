@@ -5,7 +5,8 @@ Enemy::Enemy() :
 	m_position(100, 500),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(10.0f)
+	m_maxSpeed(2.0f),
+	m_maxRotation(2.0f)
 {
 	if (!m_texture.loadFromFile("Enemy.png")) {
 		//do something
@@ -88,9 +89,14 @@ void Enemy::update(sf::Vector2f playerPosition)
 {
 	m_velocity = playerPosition - m_position;
 	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
-	m_velocityF = m_velocityF * m_maxSpeed;
+	//m_velocityF = m_velocityF * m_maxSpeed;
 	m_orientation = getNewOrientation(m_orientation, m_velocityF);
+	m_orientation = m_orientation + m_maxRotation * getRandom(-1 ,+ 1);
+	m_velocity.x = -sin(m_orientation);
+	m_velocity.y = cos(m_orientation) * m_maxSpeed;
 
+
+	m_position = m_position + m_velocity;
 
 	m_sprite.setPosition(m_position);
 	m_sprite.setRotation(m_orientation);
