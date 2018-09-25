@@ -2,8 +2,6 @@
 #include <SFML\Graphics.hpp>
 #include <string>
 #include <math.h>
-#include  <cmath>
-#include <iostream>
 
 class Player
 {
@@ -11,7 +9,6 @@ public:
 	Player();
 	~Player();
 
-	float getNewOrientation(float m_rotation, float m_speed);
 	void speedUp();
 	void speedDown();
 	void increaseRotation();
@@ -27,6 +24,7 @@ private:
 	sf::Texture m_texture;
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_position;
+	float m_orientation;
 
 	float  DEG_TO_RAD;
 	float m_maxSpeed;

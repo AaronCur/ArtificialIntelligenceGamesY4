@@ -15,11 +15,13 @@ public:
 
 private:
 	sf::Vector2f m_position;
-	sf::RectangleShape m_rect;
+	float m_orientation;
 	sf::Vector2f m_velocity;
+	flaot m_rotation;
 	sf::Sprite m_sprite;
 	sf::Texture m_texture;
 	sf::CircleShape shape;
+	sf::RectangleShape m_rect;
 };
 
 
