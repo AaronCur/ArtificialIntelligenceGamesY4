@@ -4,8 +4,9 @@ EnemySeek::EnemySeek() :
 	m_position(300, 500),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(2.0f),
-	m_maxRotation(20.0f)
+	m_maxSpeed(1.0f),
+	m_maxRotation(20.0f),
+	m_timeToTarget(300.0f)
 {
 
 	if (!m_texture.loadFromFile("Enemy.png")) {
@@ -86,7 +87,7 @@ float EnemySeek::getRandom(int a, int b)
 
 }
 
-void EnemySeek::seek(sf::Vector2f playerPosition)
+void EnemySeek::kinematicSeek(sf::Vector2f playerPosition)
 {
 	m_velocity = playerPosition - m_position;
 	//Get magnitude of vector
@@ -103,11 +104,40 @@ void EnemySeek::seek(sf::Vector2f playerPosition)
 	m_orientation = getNewOrientation(m_orientation, m_velocityF);
 	
 }
+void EnemySeek::kinematicArrive(sf::Vector2f playerPosition)
+{
+	//Get magnitude of vector
+	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
+	
+	m_velocity = playerPosition - m_position;
+
+	//if (m_velocityF < 0)
+	//{
+		//return m_velocityF;
+	//}
+	if ( m_velocityF >= 0)
+	{
+		m_velocity = m_velocity / m_timeToTarget;
+
+		if (m_velocityF > m_maxSpeed) {
+
+			//Normalize vector
+			m_velocity.x = m_velocity.x / m_velocityF;
+			m_velocity.y = m_velocity.y / m_velocityF;
+
+			m_velocity = m_velocity * m_maxSpeed;
+		}
+
+		m_orientation = getNewOrientation(m_orientation, m_velocityF);
+	}
+
+}
 
 void EnemySeek::update(sf::Vector2f playerPosition)
 {
 
-	seek(playerPosition);
+	kinematicSeek(playerPosition);
+	kinematicArrive(playerPosition);
 
 	m_position = m_position + m_velocity;
 
