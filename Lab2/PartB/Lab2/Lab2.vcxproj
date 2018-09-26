@@ -145,6 +145,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemySeek.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="EnemyFlee.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="EnemySeek.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="EnemyFlee.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>

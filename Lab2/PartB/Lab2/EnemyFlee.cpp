@@ -1,10 +1,10 @@
-#include "EnemySeek.h"
+#include "EnemyFlee.h"
 
-EnemySeek::EnemySeek() :
+EnemyFlee::EnemyFlee() :
 	m_position(300, 500),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(1.0f),
+	m_maxSpeed(3.0f),
 	m_maxRotation(20.0f),
 	m_timeToTarget(300.0f)
 {
@@ -33,11 +33,11 @@ EnemySeek::EnemySeek() :
 }
 
 
-EnemySeek::~EnemySeek()
+EnemyFlee::~EnemyFlee()
 {
 
 }
-float EnemySeek::getNewOrientation(float currentOrientation, float velocity)
+float EnemyFlee::getNewOrientation(float currentOrientation, float velocity)
 {
 	if (velocity >0)
 	{
@@ -48,7 +48,7 @@ float EnemySeek::getNewOrientation(float currentOrientation, float velocity)
 	}
 
 }
-void EnemySeek::respawn(float x, float y)
+void EnemyFlee::respawn(float x, float y)
 {
 
 
@@ -79,7 +79,7 @@ void EnemySeek::respawn(float x, float y)
 
 }
 
-float EnemySeek::getRandom(int a, int b)
+float EnemyFlee::getRandom(int a, int b)
 {
 	srand(time(NULL));
 	float randVal = rand() % a + b;
@@ -87,7 +87,7 @@ float EnemySeek::getRandom(int a, int b)
 
 }
 
-void EnemySeek::kinematicSeek(sf::Vector2f playerPosition)
+void EnemyFlee::kinematicSeek(sf::Vector2f playerPosition)
 {
 	m_velocity = playerPosition - m_position;
 	//Get magnitude of vector
@@ -102,20 +102,20 @@ void EnemySeek::kinematicSeek(sf::Vector2f playerPosition)
 
 	std::cout << m_velocity.x << std::endl;;
 	m_orientation = getNewOrientation(m_orientation, m_velocityF);
-	
+
 }
-void EnemySeek::kinematicArrive(sf::Vector2f playerPosition)
+void EnemyFlee::kinematicArrive(sf::Vector2f playerPosition)
 {
 	//Get magnitude of vector
 	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
-	
+
 	m_velocity = playerPosition - m_position;
 
 	//if (m_velocityF < 0)
 	//{
-		//return m_velocityF;
+	//return m_velocityF;
 	//}
-	if ( m_velocityF >= 0)
+	if (m_velocityF >= 0)
 	{
 		m_velocity = m_velocity / m_timeToTarget;
 
@@ -125,20 +125,42 @@ void EnemySeek::kinematicArrive(sf::Vector2f playerPosition)
 			m_velocity.x = m_velocity.x / m_velocityF;
 			m_velocity.y = m_velocity.y / m_velocityF;
 
-			m_velocity = m_velocity* m_maxSpeed;
-		
+			m_velocity = m_velocity * m_maxSpeed;
 		}
 
 		m_orientation = getNewOrientation(m_orientation, m_velocityF);
 	}
 
 }
+void EnemyFlee::kinematicFlee(sf::Vector2f playerPosition)
+{
+	m_velocity = playerPosition - m_position;
+	//Get magnitude of vector
+	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
+	//m_velocityF = m_velocityF * m_maxSpeed;
+	//Normalize vector
+	m_velocity.x = m_velocity.x / m_velocityF;
+	m_velocity.y = m_velocity.y / m_velocityF;
 
-void EnemySeek::update(sf::Vector2f playerPosition)
+	m_velocity.x = m_velocity.x * m_maxSpeed;
+	m_velocity.y = m_velocity.y * m_maxSpeed;
+
+	m_velocity = -m_velocity;
+
+	std::cout << m_velocity.x << std::endl;;
+	m_orientation = getNewOrientation(m_orientation, m_velocityF);
+
+	m_orientation = -m_orientation;
+
+
+}
+
+void EnemyFlee::update(sf::Vector2f playerPosition)
 {
 
 	//kinematicSeek(playerPosition);
-	kinematicArrive(playerPosition);
+	//kinematicArrive(playerPosition);
+	kinematicFlee(playerPosition);
 
 	m_position = m_position + m_velocity;
 
@@ -149,7 +171,7 @@ void EnemySeek::update(sf::Vector2f playerPosition)
 }
 
 
-void EnemySeek::render(sf::RenderWindow & window)
+void EnemyFlee::render(sf::RenderWindow & window)
 {
 
 	window.draw(m_sprite);

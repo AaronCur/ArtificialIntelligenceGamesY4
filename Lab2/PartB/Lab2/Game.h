@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemySeek.h"
+#include "EnemyFlee.h"
 
 class Game
 {
@@ -24,6 +25,7 @@ protected:
 	Player* m_player;
 	Enemy* m_enemy;
 	EnemySeek* m_enemySeek;
+	EnemyFlee* m_enemyFlee;
 	
 };
 #endif // !GAME_H
