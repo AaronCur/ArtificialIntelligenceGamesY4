@@ -8,7 +8,7 @@ Enemy::Enemy() :
 	m_maxRotation(20.0f)
 {
 
-	if (!m_texture.loadFromFile("Enemy.png")) {
+	if (!m_texture.loadFromFile("EnemyWander.png")) {
 		//do something
 	}
 

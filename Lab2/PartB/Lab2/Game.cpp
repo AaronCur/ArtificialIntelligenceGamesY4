@@ -4,7 +4,7 @@
 /// 
 /// </summary>
 Game::Game() :
-	m_window(sf::VideoMode(1920, 1080), "AI Lab1", sf::Style::Default)
+	m_window(sf::VideoMode(1920, 1080), "AI Lab2B", sf::Style::Default)
 {
 	m_player = new Player();
 	m_enemy = new Enemy();
@@ -52,8 +52,8 @@ void Game::run()
 void Game::update(double dt)
 {
 	m_player->update(dt);
-	//m_enemy->update(m_player->getPosition());
-	//m_enemySeek->update(m_player->getPosition());
+	m_enemy->update(m_player->getPosition());
+	m_enemySeek->update(m_player->getPosition());
 
 	m_enemyFlee->update(m_player->getPosition());
 	
@@ -66,8 +66,8 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_player->render(m_window);
-	//m_enemy->render(m_window);
-	//m_enemySeek->render(m_window);
+	m_enemy->render(m_window);
+	m_enemySeek->render(m_window);
 	m_enemyFlee->render(m_window);
 	m_window.display();
 }

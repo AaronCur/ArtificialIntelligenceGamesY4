@@ -4,7 +4,7 @@ Player::Player() :
 	m_velocity(0,0),
 	shape(100.0),
 	m_rotation(0),
-	m_maxSpeed(250),
+	m_maxSpeed(220.0),
 	m_speed(0),
 	m_heading(0,0)
 
@@ -35,27 +35,27 @@ void Player::speedUp()
 {
 	if (m_speed < m_maxSpeed)
 	{
-		m_speed += 1;
+		m_speed += 2;
 	}
 }
 void Player::speedDown()
 {
 	if (m_speed > 0)
 	{
-		m_speed -= 1;
+		m_speed -= 2;
 	}
 }
 void Player::increaseRotation()
 {
 
-	m_rotation += 1.0f;
+	m_rotation += 2.0f;
 }
 void Player::decreaseRotation()
 {
 	
 	if (m_rotation != 0.00f)
 	{
-		m_rotation -= 1.0f;
+		m_rotation -= 2.0f;
 	}
 	else
 	{

@@ -25,12 +25,7 @@ Player::~Player()
 {
 
 }
-void Player::getNewOrientation()
-{
-	m_heading.x = cos(m_rotation * (3.14 / 180));
-	m_heading.y = sin(m_rotation * (3.14 / 180));
 
-}
 void Player::speedUp()
 {
 	if (m_speed < m_maxSpeed)
@@ -92,13 +87,11 @@ void Player::update(double dt)
 		m_velocity.y = 0;
 	}
 
-	getNewOrientation();
+	m_heading.x = cos(m_rotation * (3.14 / 180));
+	m_heading.y = sin(m_rotation * (3.14 / 180));
+	
 	m_sprite.setPosition(m_sprite.getPosition().x + m_heading.x * m_speed * (dt / 1000), m_sprite.getPosition().y + m_heading.y* m_speed * (dt / 1000));
 	m_sprite.setRotation(m_rotation);
-
-	//m_position = m_position + m_velocity;
-	//m_sprite.setPosition(m_position);
-	
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
 

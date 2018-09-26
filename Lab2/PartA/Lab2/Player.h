@@ -9,7 +9,6 @@ public:
 	Player();
 	~Player();
 
-	void getNewOrientation();
 	void speedUp();
 	void speedDown();
 	void increaseRotation();

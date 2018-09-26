@@ -6,10 +6,10 @@ EnemySeek::EnemySeek() :
 	shape(100.0f),
 	m_maxSpeed(1.0f),
 	m_maxRotation(20.0f),
-	m_timeToTarget(300.0f)
+	m_timeToTarget(80.0f)
 {
 
-	if (!m_texture.loadFromFile("Enemy.png")) {
+	if (!m_texture.loadFromFile("EnemySeek.png")) {
 		//do something
 	}
 

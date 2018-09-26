@@ -1,15 +1,15 @@
 #include "EnemyFlee.h"
 
 EnemyFlee::EnemyFlee() :
-	m_position(300, 500),
+	m_position(200, 200),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(3.0f),
+	m_maxSpeed(2.0f),
 	m_maxRotation(20.0f),
-	m_timeToTarget(300.0f)
+	m_timeToTarget(100.0f)
 {
 
-	if (!m_texture.loadFromFile("Enemy.png")) {
+	if (!m_texture.loadFromFile("EnemyFlee.png")) {
 		//do something
 	}
 
@@ -134,7 +134,7 @@ void EnemyFlee::kinematicArrive(sf::Vector2f playerPosition)
 }
 void EnemyFlee::kinematicFlee(sf::Vector2f playerPosition)
 {
-	m_velocity = playerPosition - m_position;
+	m_velocity = m_position - playerPosition;
 	//Get magnitude of vector
 	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
 	//m_velocityF = m_velocityF * m_maxSpeed;
@@ -145,13 +145,9 @@ void EnemyFlee::kinematicFlee(sf::Vector2f playerPosition)
 	m_velocity.x = m_velocity.x * m_maxSpeed;
 	m_velocity.y = m_velocity.y * m_maxSpeed;
 
-	m_velocity = -m_velocity;
 
 	std::cout << m_velocity.x << std::endl;;
 	m_orientation = getNewOrientation(m_orientation, m_velocityF);
-
-	m_orientation = -m_orientation;
-
 
 }
 
