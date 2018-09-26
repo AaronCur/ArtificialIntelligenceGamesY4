@@ -7,6 +7,7 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemySeek.h"
 
 class Game
 {
@@ -22,6 +23,7 @@ protected:
 	sf::RenderWindow m_window;
 	Player* m_player;
 	Enemy* m_enemy;
+	EnemySeek* m_enemySeek;
 	
 };
 #endif // !GAME_H

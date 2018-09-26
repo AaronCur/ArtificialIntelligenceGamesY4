@@ -3,13 +3,13 @@
 #include <iostream>
 #include <random>
 
-class Enemy
+class EnemySeek
 {
 public:
-	Enemy();
-	~Enemy();
+	EnemySeek();
+	~EnemySeek();
 	float getNewOrientation(float currentOrientation, float velocity);
-	void kinematicWander(sf::Vector2f playerPosition);
+	void seek(sf::Vector2f playerPosition);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
 	void update(sf::Vector2f playerPosition);
