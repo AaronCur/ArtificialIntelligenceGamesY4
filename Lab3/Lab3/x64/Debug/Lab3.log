@@ -1,0 +1,7 @@
+﻿  Player.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(19): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(22): warning C4305: '=': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(91): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(92): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Lab3.vcxproj -> C:\College\Year4\ArtificialIntelligenceGamesY4\Lab3\x64\Debug\Lab3.exe
+  Lab3.vcxproj -> C:\College\Year4\ArtificialIntelligenceGamesY4\Lab3\x64\Debug\Lab3.pdb (Partial PDB)

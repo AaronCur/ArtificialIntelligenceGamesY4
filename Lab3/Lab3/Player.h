@@ -10,6 +10,7 @@ public:
 	~Player();
 
 	sf::Vector2f getPosition();
+	sf::Vector2f getVelocity();
 	void speedUp();
 	void speedDown();
 	void increaseRotation();

@@ -31,6 +31,10 @@ sf::Vector2f Player::getPosition()
 {
 	return m_sprite.getPosition();
 }
+sf::Vector2f Player::getVelocity()
+{
+	return m_velocity;
+}
 
 void Player::speedUp()
 {
@@ -70,41 +74,30 @@ void Player::update(double dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-
 		increaseRotation();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		
 		decreaseRotation();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		
 		speedUp();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		speedDown();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		m_velocity.x = 0;
-		m_velocity.y = 0;
-	}
 
 	m_heading.x = cos(m_rotation * (3.14 / 180));
 	m_heading.y = sin(m_rotation * (3.14 / 180));
 
-	std::cout << m_heading.x << std::endl;
+	m_velocity = m_heading * m_speed;
 	
-	m_sprite.setPosition(m_sprite.getPosition().x + m_heading.x * m_speed * (dt / 1000), m_sprite.getPosition().y + m_heading.y* m_speed * (dt / 1000));
+	m_sprite.setPosition(m_sprite.getPosition().x + m_velocity.x * (dt / 100), m_sprite.getPosition().y + m_velocity.y * (dt / 100));
 	m_sprite.setRotation(m_rotation);
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
-
-	
-
 
 }
 

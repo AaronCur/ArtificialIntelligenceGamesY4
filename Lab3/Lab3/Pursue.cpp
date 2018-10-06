@@ -131,22 +131,41 @@ void Pursue::kinematicArrive(sf::Vector2f playerPosition)
 	}
 
 }
-void Pursue::pursue(sf::Vector2f playerPosition) {
-	//predictTim = 0.1
+void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
+	//direction = target.positon - my.position
+	//distance = direction.length
+	//speed = my.velocity.length
 
-	//futurePos = my.position + my.velocity * predictTime
-	//currentParam = path.getParam(futurePos)
+	//if speed <= distance / maxTimePrediction:
+		//timePrediction = maxTimeprediction
+	//else:
+		//timePrediciton = distance/speed
+	//NewTarget.position = target.position + target.velocity * timePrediction
+	//return seek(me, newTarget)
 
-	//currentParam = path.getParam(my.position)
-	//targetParam = currerntParam + pathOffset
-	//target.position = path.getPosition(targetParam)
-	//seek(target)
-
+	m_direction = playerPosition - m_position;
+	
+	
+	m_distance = std::sqrt(m_direction.x*m_direction.x + m_direction.y* m_direction.y);
 
 	
+	m_speed = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
 
+	
+	if (m_speed <= m_distance / m_maxTimePrediction) {
+		
+		m_timePrediction = m_maxTimePrediction;
+	}
+	else {
+		m_timePrediction = m_distance / m_speed;
+	}
+
+	m_targetPos = playerPosition + playerVelocity * m_timePrediction;
+
+	kinematicSeek(m_targetPos);
+		
 }
-void Pursue::update(sf::Vector2f playerPosition)
+void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 {
 
 	kinematicSeek(playerPosition);
