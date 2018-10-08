@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{8558E21C-773A-468B-9F7C-994C4167416D}</ProjectGuid>
     <RootNamespace>Lab3</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -146,18 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyFlee.cpp" />
-    <ClCompile Include="EnemySeek.cpp" />
+    <ClCompile Include="Arrive.cpp" />
+    <ClCompile Include="Wander.cpp" />
+    <ClCompile Include="Flee.cpp" />
+    <ClCompile Include="Seek.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Pursue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrive.h" />
+    <ClInclude Include="Wander.h" />
+    <ClInclude Include="Flee.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyFlee.h" />
-    <ClInclude Include="EnemySeek.h" />
+    <ClInclude Include="Seek.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pursue.h" />

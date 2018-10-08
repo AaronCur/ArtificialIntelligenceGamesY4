@@ -7,10 +7,18 @@ Game::Game() :
 	m_window(sf::VideoMode(1920, 1080), "AI Lab2B", sf::Style::Default)
 {
 	m_player = new Player();
-	m_enemy = new Enemy();
-	m_enemySeek = new EnemySeek();
-	m_enemyFlee = new EnemyFlee();
-	m_enemyPursue = new Pursue();
+	Enemy* m_pursue = new Pursue();
+
+
+	Factory* factory = new EnemyFactory;
+
+	/*enemies.push_back(factory->CreateEnemy());
+	enemies.push_back(factory->CreateEnemy());
+	enemies.push_back(factory->CreateEnemy());
+	enemies.push_back(factory->CreateEnemy());
+	enemies.push_back(factory->CreateEnemy());*/
+
+	enemies.push_back(factory->CreatePursue());
 }
 
 /// <summary>
@@ -53,11 +61,16 @@ void Game::run()
 void Game::update(double dt)
 {
 	m_player->update(dt);
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->update(m_player->getPosition(), m_player->getVelocity());
+	}
 	//m_enemy->update(m_player->getPosition());
 	//m_enemySeek->update(m_player->getPosition());
 
 //	m_enemyFlee->update(m_player->getPosition());
-	m_enemyPursue->update(m_player->getPosition(), m_player->getVelocity());
+	//m_enemyPursue->update(m_player->getPosition(), m_player->getVelocity());
 	
 }
 
@@ -68,7 +81,12 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_player->render(m_window);
-	m_enemyPursue->render(m_window);
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->render(m_window);
+	}
+//	m_enemyPursue->render(m_window);
 	//m_enemy->render(m_window);
 	//m_enemySeek->render(m_window);
 	//m_enemyFlee->render(m_window);

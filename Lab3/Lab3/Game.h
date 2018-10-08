@@ -4,11 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-
+#include <vector>
 #include "Player.h"
 #include "Enemy.h"
-#include "EnemySeek.h"
-#include "EnemyFlee.h"
 #include "Pursue.h"
 
 class Game
@@ -24,10 +22,10 @@ private:
 protected:
 	sf::RenderWindow m_window;
 	Player* m_player;
-	Enemy* m_enemy;
-	EnemySeek* m_enemySeek;
-	EnemyFlee* m_enemyFlee;
-	Pursue* m_enemyPursue;
+
+	//Enemy* m_pursue;
+
+	std::vector<Enemy*> enemies;
 	
 };
 #endif // !GAME_H

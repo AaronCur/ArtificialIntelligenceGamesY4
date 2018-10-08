@@ -1,6 +1,41 @@
 ﻿  Pursue.cpp
-c:\users\gameuser\documents\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(24): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\gameuser\documents\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-c:\users\gameuser\documents\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\gameuser\documents\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Lab3.vcxproj -> C:\Users\gameuser\Documents\Year4\ArtificialIntelligenceGamesY4\Lab3\x64\Debug\Lab3.exe
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(24): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\pursue.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Player.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(19): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(22): warning C4305: '=': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(92): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(93): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\player.cpp(97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Main.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+  Game.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+  Seek.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\seek.cpp(23): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\seek.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\seek.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\seek.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Flee.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\flee.cpp(23): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\flee.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\flee.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\flee.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Wander.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\wander.cpp(22): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\wander.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\wander.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\wander.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Arrive.cpp
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\enemy.h(25): error C2061: syntax error: identifier 'Pursue'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\arrive.cpp(23): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\arrive.cpp(44): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\arrive.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\college\year4\artificialintelligencegamesy4\lab3\lab3\arrive.cpp(85): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating Code...

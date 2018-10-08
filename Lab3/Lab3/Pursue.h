@@ -2,9 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <random>
-#include "Player.h"
+#include "Enemy.h"
 
-class Pursue
+class Pursue : public Enemy
 {
 public:
 	Pursue();
@@ -15,7 +15,7 @@ public:
 	void pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
-	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
+	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocityr);
 	void render(sf::RenderWindow & window);
 
 private:
