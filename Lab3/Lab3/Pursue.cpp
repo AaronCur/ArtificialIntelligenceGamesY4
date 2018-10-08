@@ -164,7 +164,7 @@ void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
 	m_targetPos = playerPosition + playerVelocity * m_timePrediction;
 	
 
-	kinematicSeek(m_targetPos);
+	kinematicArrive(m_targetPos);
 		
 }
 void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
