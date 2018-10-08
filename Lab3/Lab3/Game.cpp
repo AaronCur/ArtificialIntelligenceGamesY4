@@ -68,6 +68,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_player->render(m_window);
+	m_enemyPursue->render(m_window);
 	//m_enemy->render(m_window);
 	//m_enemySeek->render(m_window);
 	//m_enemyFlee->render(m_window);

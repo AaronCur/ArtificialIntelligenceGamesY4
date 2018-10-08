@@ -4,9 +4,10 @@ Pursue::Pursue() :
 	m_position(300, 500),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(1.0f),
+	m_maxSpeed(3.0f),
 	m_maxRotation(20.0f),
-	m_timeToTarget(80.0f)
+	m_timeToTarget(80.0f),
+	m_maxTimePrediction(3.0f)
 {
 
 	if (!m_texture.loadFromFile("EnemySeek.png")) {
@@ -150,7 +151,7 @@ void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
 
 	
 	m_speed = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
-
+	std::cout << m_maxTimePrediction << std::endl;
 	
 	if (m_speed <= m_distance / m_maxTimePrediction) {
 		
@@ -161,6 +162,7 @@ void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
 	}
 
 	m_targetPos = playerPosition + playerVelocity * m_timePrediction;
+	
 
 	kinematicSeek(m_targetPos);
 		
@@ -168,8 +170,10 @@ void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
 void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 {
 
-	kinematicSeek(playerPosition);
-	kinematicArrive(playerPosition);
+	//kinematicSeek(playerPosition);
+	//kinematicArrive(playerPosition);
+
+	pursue(playerPosition, playerVelocity);
 
 	m_position = m_position + m_velocity;
 
