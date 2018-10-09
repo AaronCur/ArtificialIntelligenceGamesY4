@@ -13,9 +13,10 @@ public:
 	void kinematicSeek(sf::Vector2f playerPosition);
 	void kinematicArrive(sf::Vector2f playerPosition);
 	void pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
+	void collisionAvoidance(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
-	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocityr);
+	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
 	void render(sf::RenderWindow & window);
 
 private:

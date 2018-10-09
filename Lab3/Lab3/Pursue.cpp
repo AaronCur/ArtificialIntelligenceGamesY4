@@ -96,6 +96,28 @@ float Pursue::getRandom(int a, int b)
 
 }
 
+void collisionAvoidance(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
+
+///Closest approach
+
+	//ShortestTime = infinity
+	//firstTarget = None /// target tht will collide first
+	//firstMinSeperation, firstDistance, firstRelativePos, firstRelativeVel
+	//Radius // Collision radius
+
+	//for target in targets:
+		//relativePos = target.position - charachter.position
+		//relativeVel = target.velocity - charachter.velocity
+		//relativeSpeed = relativeVel.length
+		//timeToCollision = (relativePos.RelativeVel) / (relativeSpeed*relativespeed)
+		//distance = relativePos.length()
+		//minSeperation = distance - relativeSpeed * shortestTime
+		
+		//If mineperation > 2 *radius : continue
+		//If timeToCollision > 0 and timeToCollision < shortestTime:
+			//shortestTime = timeToCollision
+			//firstTarger
+}
 void Pursue::kinematicSeek(sf::Vector2f playerPosition)
 {
 	m_velocity = playerPosition - m_position;
