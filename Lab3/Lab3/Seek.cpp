@@ -13,6 +13,15 @@ Seek::Seek() :
 		//do something
 	}
 
+	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
+	{
+		std::cout << "problem loading font" << std::endl;
+	}
+
+	m_label.setFont(m_font);
+	m_label.setCharacterSize(22);
+	m_label.setString("Arrive");
+	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
 
 	//m_rect.setTexture(&m_texture);
 	//m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
@@ -115,6 +124,8 @@ void Seek::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 	m_sprite.setRotation(m_orientation);
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
+	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+
 }
 
 
@@ -122,4 +133,5 @@ void Seek::render(sf::RenderWindow & window)
 {
 
 	window.draw(m_sprite);
+	window.draw(m_label);
 }

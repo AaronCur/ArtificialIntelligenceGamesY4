@@ -10,18 +10,18 @@ public:
 
 };
 
-class Factory {
-public:
-	virtual Enemy* CreatePursue() = 0;
-	//virtual Enemy* CreateSeek() = 0;
-	//virtual Enemy* CreateArrive() = 0;
-	//virtual Enemy* CreateWander() = 0;*/
-	//virtual Enemy* CreateFlee() = 0;
-};
-
-class EnemyFactory : public Factory {
-public:
-	Enemy * CreatePursue() {
-		return new Pursue;
-	}
-};
+//class Factory {
+//public:
+//	virtual Enemy* CreatePursue() = 0;
+//	//virtual Enemy* CreateSeek() = 0;
+//	//virtual Enemy* CreateArrive() = 0;
+//	//virtual Enemy* CreateWander() = 0;*/
+//	//virtual Enemy* CreateFlee() = 0;
+//};
+//
+//class EnemyFactory : public Factory {
+//public:
+//	Enemy * CreatePursue() {
+//		return new Pursue;
+//	}
+//};

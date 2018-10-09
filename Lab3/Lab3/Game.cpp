@@ -10,7 +10,7 @@ Game::Game() :
 	Enemy* m_pursue = new Pursue();
 
 
-	Factory* factory = new EnemyFactory;
+	//Factory* factory = new EnemyFactory;
 
 	/*enemies.push_back(factory->CreateEnemy());
 	enemies.push_back(factory->CreateEnemy());
@@ -18,7 +18,7 @@ Game::Game() :
 	enemies.push_back(factory->CreateEnemy());
 	enemies.push_back(factory->CreateEnemy());*/
 
-	enemies.push_back(factory->CreatePursue());
+	enemies.push_back(m_pursue);
 }
 
 /// <summary>
