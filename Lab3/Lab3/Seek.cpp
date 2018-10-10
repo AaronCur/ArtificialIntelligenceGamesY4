@@ -46,6 +46,19 @@ Seek::~Seek()
 {
 
 }
+
+sf::Vector2f Seek::getPosition()
+{
+	return m_sprite.getPosition();
+}
+sf::Vector2f Seek::getVelocity()
+{
+	return m_velocity;
+}
+int Seek::getId()
+{
+	return id;
+}
 float Seek::getNewOrientation(float currentOrientation, float velocity)
 {
 	if (velocity >0)

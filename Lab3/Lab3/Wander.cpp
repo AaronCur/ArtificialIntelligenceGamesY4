@@ -47,6 +47,19 @@ Wander::~Wander()
 {
 
 }
+
+sf::Vector2f Wander::getPosition()
+{
+	return m_sprite.getPosition();
+}
+sf::Vector2f Wander::getVelocity()
+{
+	return m_velocity;
+}
+int Wander::getId()
+{
+	return id;
+}
 float Wander::getNewOrientation(float currentOrientation, float velocity)
 {
 	if (velocity >0)

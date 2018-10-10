@@ -48,6 +48,19 @@ Arrive::~Arrive()
 {
 
 }
+sf::Vector2f Arrive::getPosition()
+{
+	return m_sprite.getPosition();
+}
+sf::Vector2f Arrive::getVelocity()
+{
+	return m_velocity;
+}
+int Arrive::getId()
+{
+	return id;
+}
+
 float Arrive::getNewOrientation(float currentOrientation, float velocity)
 {
 	if (velocity >0)

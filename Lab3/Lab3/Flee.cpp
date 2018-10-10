@@ -46,6 +46,18 @@ Flee::~Flee()
 {
 
 }
+sf::Vector2f Flee::getPosition()
+{
+	return m_sprite.getPosition();
+}
+sf::Vector2f Flee::getVelocity()
+{
+	return m_velocity;
+}
+int Flee::getId()
+{
+	return id;
+}
 float Flee::getNewOrientation(float currentOrientation, float velocity)
 {
 	if (velocity >0)

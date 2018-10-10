@@ -17,6 +17,9 @@ public:
 	float getRandom(int x, int y);
 	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
 	void render(sf::RenderWindow & window);
+	sf::Vector2f getVelocity();
+	sf::Vector2f getPosition();
+	int getId();
 
 private:
 	float m_timeToTarget;
@@ -33,5 +36,7 @@ private:
 	sf::RectangleShape m_rect;
 	sf::Text m_label;
 	sf::Font m_font;
+
+	int id = 2;
 };
 

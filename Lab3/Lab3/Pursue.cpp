@@ -3,11 +3,14 @@
 Pursue::Pursue() :
 	m_position(300, 500),
 	m_velocity(0, 0),
+	m_relVelocity(0,0),
 	shape(100.0f),
 	m_maxSpeed(3.0f),
 	m_maxRotation(20.0f),
 	m_timeToTarget(80.0f),
-	m_maxTimePrediction(3.0f)
+	m_maxTimePrediction(3.0f),
+	m_relSpeed(0.0f),
+	m_radius(10.0f)
 {
 
 	if (!m_texture.loadFromFile("EnemySeek.png")) {
@@ -45,6 +48,18 @@ Pursue::Pursue() :
 Pursue::~Pursue()
 {
 
+}
+sf::Vector2f Pursue::getPosition()
+{
+	return m_sprite.getPosition();
+}
+sf::Vector2f Pursue::getVelocity()
+{
+	return m_velocity;
+}
+int Pursue::getId()
+{
+	return id;
 }
 float Pursue::getNewOrientation(float currentOrientation, float velocity)
 {
@@ -96,7 +111,7 @@ float Pursue::getRandom(int a, int b)
 
 }
 
-void collisionAvoidance(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
+void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 
 ///Closest approach
 
@@ -117,6 +132,35 @@ void collisionAvoidance(sf::Vector2f playerPosition, sf::Vector2f playerVelocity
 		//If timeToCollision > 0 and timeToCollision < shortestTime:
 			//shortestTime = timeToCollision
 			//firstTarger
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i]->getId() != id)
+		{
+			m_relPosition = enemies[i]->getPosition() - m_position;
+			m_relVelocity = enemies[i]->getVelocity() - m_velocity;
+			m_relSpeed = std::sqrt(m_relVelocity.x*m_relVelocity.x + m_relVelocity.y* m_relVelocity.y);
+			m_timeToCollision = ((m_relPosition.x * m_relVelocity.x) + (m_relPosition.y * m_relVelocity.y)) / (m_relSpeed * m_relSpeed);
+
+			m_distance = std::sqrt(m_relPosition.x*m_relPosition.x + m_relPosition.y* m_relPosition.y);
+
+			m_minSeperation = m_distance - (m_relSpeed * m_shortestTime);
+
+			if (m_minSeperation <= 2 * m_radius)
+			{
+				break;
+			}
+
+			if (m_timeToCollision > 0 && m_timeToCollision < m_shortestTime)
+			{
+				m_shortestTime = m_timeToCollision;
+			}
+			
+		}
+	}
+
+
+
 }
 void Pursue::kinematicSeek(sf::Vector2f playerPosition)
 {
