@@ -165,6 +165,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pursue.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="EnemyFlee.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

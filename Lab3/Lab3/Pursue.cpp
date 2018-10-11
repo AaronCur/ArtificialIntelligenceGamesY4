@@ -17,16 +17,16 @@ Pursue::Pursue() :
 		//do something
 	}
 
-	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
+	if (!m_font.loadFromFile("Adventure.otf"))
 	{
 		std::cout << "problem loading font" << std::endl;
 	}
 
 	m_label.setFont(m_font);
-	m_label.setCharacterSize(22);
-	m_label.setString("Arrive");
-	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
-
+	m_label.setCharacterSize(40);
+	m_label.setString("Pursue");
+	m_label.setPosition(m_sprite.getPosition());
+	m_label.setFillColor(sf::Color(127,127,127,127));
 	//m_rect.setTexture(&m_texture);
 	//m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
 	//m_rect.setPosition(m_position);
@@ -38,7 +38,7 @@ Pursue::Pursue() :
 	m_velocity.y = getRandom(20, -10);
 	shape.setFillColor(sf::Color::Green);
 
-	m_sprite.setOrigin(m_position.x - (m_sprite.getTextureRect().width / 2), m_position.y - (m_sprite.getTextureRect().height / 2));
+	m_sprite.setOrigin(m_position.x - (m_sprite.getTextureRect().width / 2) - 30 , m_position.y - (m_sprite.getTextureRect().height / 2) + 200);
 
 	
 
@@ -133,33 +133,54 @@ void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 			//shortestTime = timeToCollision
 			//firstTarger
 
+	//for (int i = 0; i < enemies.size(); i++)
+	//{
+	//	if (enemies[i]->getId() != id)
+	//	{
+	//		m_relPosition = enemies[i]->getPosition() - m_position;
+	//		m_relVelocity = enemies[i]->getVelocity() - m_velocity;
+	//		m_relSpeed = std::sqrt(m_relVelocity.x*m_relVelocity.x + m_relVelocity.y* m_relVelocity.y);
+	//		m_timeToCollision = ((m_relPosition.x * m_relVelocity.x) + (m_relPosition.y * m_relVelocity.y)) / (m_relSpeed * m_relSpeed);
+
+	//		m_distance = std::sqrt(m_relPosition.x*m_relPosition.x + m_relPosition.y* m_relPosition.y);
+
+	//		m_minSeperation = m_distance - (m_relSpeed * m_shortestTime);
+
+	//		if (m_minSeperation <= 2 * m_radius)
+	//		{
+	//			break;
+	//		}
+
+	//		if (m_timeToCollision > 0 && m_timeToCollision < m_shortestTime)
+	//		{
+	//			m_shortestTime = m_timeToCollision;
+	//			m_firstTarget = enemies[i]->getPosition();
+	//			m_firstMinSeperation = m_minSeperation;
+	//			m_firstDistance = m_distance;
+	//			m_firstRelativePos = m_relPosition;
+	//			m_firstRelativeVel = m_relVelocity;
+	//		}
+	//		
+	//	}
+	//}
+
+	//if (m_firstMinSeperation <= 0 || m_distance < 2 * m_radius) //colliding
+	//{
+	//	m_relPosition = m_firstTarget - m_position;
+	//}
+	//else
+	//{
+	//	m_relPosition = m_firstRelativePos + m_firstRelativeVel * m_shortestTime;
+	//}
+
+
+
+
+
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		if (enemies[i]->getId() != id)
-		{
-			m_relPosition = enemies[i]->getPosition() - m_position;
-			m_relVelocity = enemies[i]->getVelocity() - m_velocity;
-			m_relSpeed = std::sqrt(m_relVelocity.x*m_relVelocity.x + m_relVelocity.y* m_relVelocity.y);
-			m_timeToCollision = ((m_relPosition.x * m_relVelocity.x) + (m_relPosition.y * m_relVelocity.y)) / (m_relSpeed * m_relSpeed);
 
-			m_distance = std::sqrt(m_relPosition.x*m_relPosition.x + m_relPosition.y* m_relPosition.y);
-
-			m_minSeperation = m_distance - (m_relSpeed * m_shortestTime);
-
-			if (m_minSeperation <= 2 * m_radius)
-			{
-				break;
-			}
-
-			if (m_timeToCollision > 0 && m_timeToCollision < m_shortestTime)
-			{
-				m_shortestTime = m_timeToCollision;
-			}
-			
-		}
 	}
-
-
 
 }
 void Pursue::kinematicSeek(sf::Vector2f playerPosition)
@@ -256,7 +277,7 @@ void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 	m_sprite.setRotation(m_orientation);
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
-	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+	m_label.setPosition(m_sprite.getPosition().x - 50, m_sprite.getPosition().y - 130);
 
 }
 

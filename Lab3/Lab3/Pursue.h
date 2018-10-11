@@ -52,6 +52,11 @@ private:
 	float m_minSeperation;
 	float m_shortestTime;
 	float m_radius;
+	sf::Vector2f m_firstTarget;
+	float m_firstMinSeperation;
+	float m_firstDistance;
+	sf::Vector2f m_firstRelativePos;
+	sf::Vector2f m_firstRelativeVel;
 	
 };
 
