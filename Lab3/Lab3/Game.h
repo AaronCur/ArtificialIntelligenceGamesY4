@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Pursue.h"
+#include "Arrive.h"
 
 class Game
 {

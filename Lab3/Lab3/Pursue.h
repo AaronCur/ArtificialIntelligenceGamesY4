@@ -12,6 +12,7 @@ public:
 	float getNewOrientation(float currentOrientation, float velocity);
 	void kinematicSeek(sf::Vector2f playerPosition);
 	void kinematicArrive(sf::Vector2f playerPosition);
+	void kinematicFlee(sf::Vector2f enemyPosition);
 	void pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
 	void collisionAvoidance(std::vector<Enemy*> enemies);
 	void respawn(float x, float y);
@@ -41,7 +42,7 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	sf::Text m_label;
+	//sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 3;

@@ -8,7 +8,7 @@ Game::Game() :
 {
 	m_player = new Player();
 	Enemy* m_pursue = new Pursue();
-
+	Enemy* m_arrive = new Arrive();
 
 	//Factory* factory = new EnemyFactory;
 

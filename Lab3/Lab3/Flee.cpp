@@ -18,12 +18,12 @@ Flee::Flee() :
 		std::cout << "problem loading font" << std::endl;
 	}
 
-	m_label.setFont(m_font);
-	m_label.setCharacterSize(22);
-	m_label.setString("Arrive");
-	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+	//m_label.setFont(m_font);
+	//m_label.setCharacterSize(22);
+	//m_label.setString("Arrive");
+	//m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
 
-	//m_rect.setTexture(&m_texture);
+	////m_rect.setTexture(&m_texture);
 	//m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
 	//m_rect.setPosition(m_position);
 
@@ -32,7 +32,7 @@ Flee::Flee() :
 	m_sprite.setScale(0.3, 0.3);
 	m_velocity.x = getRandom(20, -10);
 	m_velocity.y = getRandom(20, -10);
-	shape.setFillColor(sf::Color::Green);
+	//shape.setFillColor(sf::Color::Green);
 
 	m_sprite.setOrigin(m_position.x - (m_sprite.getTextureRect().width / 2), m_position.y - (m_sprite.getTextureRect().height / 2));
 
@@ -140,7 +140,7 @@ void Flee::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 	m_sprite.setRotation(m_orientation);
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
-	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+	//m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
 
 }
 
@@ -149,5 +149,5 @@ void Flee::render(sf::RenderWindow & window)
 {
 
 	window.draw(m_sprite);
-	window.draw(m_label);
+	//window.draw(m_label);
 }

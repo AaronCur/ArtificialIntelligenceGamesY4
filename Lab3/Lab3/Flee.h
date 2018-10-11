@@ -34,7 +34,7 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	sf::Text m_label;
+	//sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 2;
