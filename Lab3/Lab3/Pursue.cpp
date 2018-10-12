@@ -8,9 +8,11 @@ Pursue::Pursue() :
 	m_maxSpeed(3.0f),
 	m_maxRotation(20.0f),
 	m_timeToTarget(80.0f),
-	m_maxTimePrediction(3.0f),
+	m_maxTimePrediction(10.0f),
 	m_relSpeed(0.0f),
-	m_radius(10.0f)
+	m_radius(300.0f),
+	m_threshold (30.0f),
+	m_update(1)
 {
 
 	if (!m_texture.loadFromFile("EnemySeek.png")) {
@@ -22,14 +24,14 @@ Pursue::Pursue() :
 		std::cout << "problem loading font" << std::endl;
 	}
 
-//	m_label.setFont(m_font);
-//	m_label.setCharacterSize(40);
-	//m_label.setString("Pursue");
-//	m_label.setPosition(m_sprite.getPosition());
-	//m_label.setFillColor(sf::Color(127,127,127,127));
-	//m_rect.setTexture(&m_texture);
-	//m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
-	//m_rect.setPosition(m_position);
+	m_label.setFont(m_font);
+	m_label.setCharacterSize(40);
+	m_label.setString("Pursue");
+	m_label.setPosition(m_sprite.getPosition());
+	m_label.setFillColor(sf::Color(127,127,127,127));
+	m_rect.setTexture(&m_texture);
+	m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
+	m_rect.setPosition(m_position);
 
 	m_sprite.setTexture(m_texture);
 	m_sprite.setPosition(m_position);
@@ -38,7 +40,7 @@ Pursue::Pursue() :
 	m_velocity.y = getRandom(20, -10);
 	//shape.setFillColor(sf::Color::Green);
 
-	m_sprite.setOrigin(m_position.x - (m_sprite.getTextureRect().width / 2) - 30 , m_position.y - (m_sprite.getTextureRect().height / 2) + 200);
+	m_sprite.setOrigin((m_sprite.getTextureRect().width / 2), (m_sprite.getTextureRect().height / 2));
 
 	
 
@@ -185,17 +187,24 @@ void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 			m_direction = enemies[i]->getPosition() - m_position;
 			m_distance = std::sqrt(m_direction.x*m_direction.x + m_direction.y* m_direction.y);
 
+
+
 			if (m_distance <= m_radius)
 			{
 				float dot = (m_velocity.x * m_direction.x) + (m_velocity.y * m_direction.y);
 				float det = (m_velocity.x * m_direction.y) - (m_velocity.y * m_direction.x);
 
 				float angle = atan2(det, dot);
+				angle = (180 / 3.14) * angle;
+				
+			
 
-				if (angle >= -20 && angle <= 20)
+				if (angle >= -m_threshold && angle <= m_threshold)
 				{
-					kinematicFlee(enemies[i]->getPosition());
+					std::cout << "Collided Pursue" << std::endl;
+					
 				}
+
 			}
 
 		
@@ -234,7 +243,6 @@ void Pursue::kinematicFlee(sf::Vector2f enemyPosition)
 	m_velocity.y = m_velocity.y * m_maxSpeed;
 
 
-	std::cout << m_velocity.x << std::endl;;
 	m_orientation = getNewOrientation(m_orientation, m_velocityF);
 
 }
@@ -286,7 +294,6 @@ void Pursue::pursue(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) {
 
 	
 	m_speed = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
-	std::cout << m_maxTimePrediction << std::endl;
 	
 	if (m_speed <= m_distance / m_maxTimePrediction) {
 		
@@ -316,7 +323,7 @@ void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 	m_sprite.setRotation(m_orientation);
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
-	//m_label.setPosition(m_sprite.getPosition().x - 50, m_sprite.getPosition().y - 130);
+	m_label.setPosition(m_sprite.getPosition().x - 50, m_sprite.getPosition().y - 130);
 
 }
 
@@ -325,5 +332,5 @@ void Pursue::render(sf::RenderWindow & window)
 {
 
 	window.draw(m_sprite);
-	//window.draw(m_label);
+	window.draw(m_label);
 }

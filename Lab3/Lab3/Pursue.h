@@ -42,7 +42,7 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	//sf::Text m_label;
+	sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 3;
@@ -58,7 +58,9 @@ private:
 	float m_firstDistance;
 	sf::Vector2f m_firstRelativePos;
 	sf::Vector2f m_firstRelativeVel;
-	
+
+	float m_threshold;
+	int m_update;
 };
 
 

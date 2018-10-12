@@ -19,6 +19,7 @@ Game::Game() :
 	enemies.push_back(factory->CreateEnemy());*/
 
 	enemies.push_back(m_pursue);
+	enemies.push_back(m_arrive);
 }
 
 /// <summary>
@@ -65,6 +66,7 @@ void Game::update(double dt)
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->update(m_player->getPosition(), m_player->getVelocity());
+		enemies[i]->collisionAvoidance(enemies);
 	}
 	//m_enemy->update(m_player->getPosition());
 	//m_enemySeek->update(m_player->getPosition());

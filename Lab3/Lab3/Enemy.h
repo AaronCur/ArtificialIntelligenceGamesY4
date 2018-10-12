@@ -7,6 +7,7 @@ public:
 	virtual ~Enemy() {}
 	virtual void render(sf::RenderWindow & window) = 0;
 	virtual void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity) = 0;
+	virtual void collisionAvoidance(std::vector<Enemy*> enemies) = 0;
 	virtual sf::Vector2f getVelocity() = 0;
 	virtual sf::Vector2f getPosition() = 0;
 	virtual int getId() = 0;
