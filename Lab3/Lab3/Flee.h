@@ -4,9 +4,7 @@
 #include <random>
 #include "Enemy.h"
 
-class Player;
-
-class Flee 
+class Flee : public Enemy
 {
 public:
 	Flee();

@@ -5,14 +5,14 @@ Pursue::Pursue() :
 	m_velocity(0, 0),
 	m_relVelocity(0,0),
 	shape(100.0f),
-	m_maxSpeed(3.0f),
+	m_maxSpeed(1.0f),
 	m_maxRotation(20.0f),
 	m_timeToTarget(80.0f),
 	m_maxTimePrediction(10.0f),
 	m_relSpeed(0.0f),
 	m_radius(300.0f),
 	m_threshold (30.0f),
-	m_update(1)
+	m_behaviour(1)
 {
 
 	if (!m_texture.loadFromFile("EnemySeek.png")) {
@@ -201,10 +201,18 @@ void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 
 				if (angle >= -m_threshold && angle <= m_threshold)
 				{
+					m_behaviour = 2;
+					m_velocity = -m_velocity;
+					m_orientation = -m_orientation;
 					std::cout << "Collided Pursue" << std::endl;
 					
 				}
+				
 
+			}
+			if (m_behaviour == 2 && m_distance > m_radius * 2)
+			{
+				m_behaviour = 1;
 			}
 
 		
@@ -315,7 +323,10 @@ void Pursue::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 	//kinematicSeek(playerPosition);
 	//kinematicArrive(playerPosition);
 
-	pursue(playerPosition, playerVelocity);
+	if (m_behaviour == 1)
+	{
+		pursue(playerPosition, playerVelocity);
+	}
 
 	m_position = m_position + m_velocity;
 

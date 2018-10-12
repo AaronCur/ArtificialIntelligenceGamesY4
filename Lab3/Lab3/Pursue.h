@@ -60,7 +60,7 @@ private:
 	sf::Vector2f m_firstRelativeVel;
 
 	float m_threshold;
-	int m_update;
+	int m_behaviour;
 };
 
 
