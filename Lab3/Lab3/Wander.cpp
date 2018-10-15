@@ -15,7 +15,7 @@ Wander::Wander() :
 		//do something
 	}
 
-	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
+	if (!m_font.loadFromFile("Adventure.otf"))
 	{
 		std::cout << "problem loading font" << std::endl;
 	}
