@@ -3,11 +3,14 @@
 #include <iostream>
 #include <random>
 #include "Enemy.h"
+#include "Game.h"
+
+class Game;
 
 class Pursue : public Enemy
 {
 public:
-	Pursue();
+	Pursue(Game & game);
 	~Pursue();
 	float getNewOrientation(float currentOrientation, float velocity);
 	void kinematicSeek(sf::Vector2f playerPosition);
@@ -24,6 +27,7 @@ public:
 	int getId();
 
 private:
+	Game * m_game;
 	float m_timeToTarget;
 	sf::Vector2f m_position;
 	float m_orientation;
@@ -61,6 +65,9 @@ private:
 
 	float m_threshold;
 	int m_behaviour;
+
+	sf::Vector2f m_avoidVec;
+	float m_avoidDist;
 };
 
 

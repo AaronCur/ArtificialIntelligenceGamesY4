@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <iostream>
 Player::Player() :
-	m_position(100, 100),
+	m_position(900, 500),
 	m_velocity(0,0),
 	shape(100.0),
 	m_rotation(0),
@@ -18,7 +18,7 @@ Player::Player() :
 	m_sprite.setPosition(m_position);
 	m_sprite.setScale(0.3, 0.3);
 	m_sprite.setRotation(90);
-	m_sprite.setOrigin(m_position.x  + (m_sprite.getTextureRect().width / 2), m_position.y  + (m_sprite.getTextureRect().height / 2));
+	m_sprite.setOrigin(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2);
 	DEG_TO_RAD = 3.14 / 180;
 	
 }

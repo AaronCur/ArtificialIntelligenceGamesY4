@@ -6,7 +6,10 @@ Flee::Flee() :
 	shape(100.0f),
 	m_maxSpeed(2.0f),
 	m_maxRotation(20.0f),
-	m_timeToTarget(100.0f)
+	m_timeToTarget(100.0f),
+	m_radius(250.0f),
+	m_threshold(30.0f),
+	m_behaviour(1)
 {
 
 	if (!m_texture.loadFromFile("EnemyFlee.png")) {
@@ -18,14 +21,15 @@ Flee::Flee() :
 		std::cout << "problem loading font" << std::endl;
 	}
 
-	//m_label.setFont(m_font);
-	//m_label.setCharacterSize(22);
-	//m_label.setString("Arrive");
-	//m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+	m_label.setFont(m_font);
+	m_label.setCharacterSize(40);
+	m_label.setString("Flee");
+	m_label.setPosition(m_sprite.getTextureRect().width / 2,  m_sprite.getTextureRect().height/ 2);
+	m_label.setFillColor(sf::Color(127, 127, 127));
 
-	////m_rect.setTexture(&m_texture);
-	//m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
-	//m_rect.setPosition(m_position);
+	//m_rect.setTexture(&m_texture);
+	m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
+	m_rect.setPosition(m_position);
 
 	m_sprite.setTexture(m_texture);
 	m_sprite.setPosition(m_position);
@@ -34,10 +38,7 @@ Flee::Flee() :
 	m_velocity.y = getRandom(20, -10);
 	//shape.setFillColor(sf::Color::Green);
 
-	m_sprite.setOrigin(m_position.x - (m_sprite.getTextureRect().width / 2), m_position.y - (m_sprite.getTextureRect().height / 2));
-
-	std::cout << m_sprite.getTextureRect().width << std::endl;
-	std::cout << m_sprite.getTextureRect().height << std::endl;
+	m_sprite.setOrigin(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2);
 
 }
 
@@ -57,6 +58,49 @@ sf::Vector2f Flee::getVelocity()
 int Flee::getId()
 {
 	return id;
+}
+
+void Flee::collisionAvoidance(std::vector<Enemy*> enemies) {
+
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i]->getId() != id)
+		{
+			//Vector player to enemy
+			m_direction = enemies[i]->getPosition() - m_position;
+			m_distance = std::sqrt(m_direction.x*m_direction.x + m_direction.y* m_direction.y);
+
+
+
+			if (m_distance <= m_radius)
+			{
+				float dot = (m_velocity.x * m_direction.x) + (m_velocity.y * m_direction.y);
+				float det = (m_velocity.x * m_direction.y) - (m_velocity.y * m_direction.x);
+
+				float angle = atan2(det, dot);
+				angle = (180 / 3.14) * angle;
+
+
+
+				if (angle >= -m_threshold && angle <= m_threshold)
+				{
+					m_behaviour = 2;
+					kinematicFlee(enemies[i]->getPosition());
+					std::cout << "Collided Flee" << std::endl;
+
+				}
+
+
+			}
+			if (m_behaviour == 2 && m_distance > m_radius * 1.3)
+			{
+				m_behaviour = 1;
+			}
+
+		}
+	}
+
 }
 float Flee::getNewOrientation(float currentOrientation, float velocity)
 {
@@ -132,7 +176,11 @@ void Flee::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 
 	//kinematicSeek(playerPosition);
 	//kinematicArrive(playerPosition);
-	kinematicFlee(playerPosition);
+	if (m_behaviour == 1)
+	{
+		kinematicFlee(playerPosition);
+	}
+	
 
 	m_position = m_position + m_velocity;
 
@@ -141,7 +189,7 @@ void Flee::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 
 	respawn(m_sprite.getPosition().x, m_sprite.getPosition().y);
 	//m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
-
+	m_label.setPosition(m_sprite.getPosition().x - 50, m_sprite.getPosition().y - 130);
 }
 
 
@@ -149,5 +197,5 @@ void Flee::render(sf::RenderWindow & window)
 {
 
 	window.draw(m_sprite);
-	//window.draw(m_label);
+	window.draw(m_label);
 }

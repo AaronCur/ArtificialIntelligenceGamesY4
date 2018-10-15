@@ -1,7 +1,8 @@
 #include "Pursue.h"
 
-Pursue::Pursue() :
-	m_position(300, 500),
+Pursue::Pursue(Game & game) :
+	m_game(&game),
+	m_position(200, 900),
 	m_velocity(0, 0),
 	m_relVelocity(0,0),
 	shape(100.0f),
@@ -10,12 +11,12 @@ Pursue::Pursue() :
 	m_timeToTarget(80.0f),
 	m_maxTimePrediction(10.0f),
 	m_relSpeed(0.0f),
-	m_radius(300.0f),
+	m_radius(250.0f),
 	m_threshold (30.0f),
 	m_behaviour(1)
 {
 
-	if (!m_texture.loadFromFile("EnemySeek.png")) {
+	if (!m_texture.loadFromFile("Enemy.png")) {
 		//do something
 	}
 
@@ -28,7 +29,7 @@ Pursue::Pursue() :
 	m_label.setCharacterSize(40);
 	m_label.setString("Pursue");
 	m_label.setPosition(m_sprite.getPosition());
-	m_label.setFillColor(sf::Color(127,127,127,127));
+	m_label.setFillColor(sf::Color(127,127,127));
 	m_rect.setTexture(&m_texture);
 	m_rect.setSize(sf::Vector2f(m_texture.getSize().x / 3, m_texture.getSize().y / 3));
 	m_rect.setPosition(m_position);
@@ -115,69 +116,6 @@ float Pursue::getRandom(int a, int b)
 
 void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 
-///Closest approach
-
-	//ShortestTime = infinity
-	//firstTarget = None /// target tht will collide first
-	//firstMinSeperation, firstDistance, firstRelativePos, firstRelativeVel
-	//Radius // Collision radius
-
-	//for target in targets:
-		//relativePos = target.position - charachter.position
-		//relativeVel = target.velocity - charachter.velocity
-		//relativeSpeed = relativeVel.length
-		//timeToCollision = (relativePos.RelativeVel) / (relativeSpeed*relativespeed)
-		//distance = relativePos.length()
-		//minSeperation = distance - relativeSpeed * shortestTime
-		
-		//If mineperation > 2 *radius : continue
-		//If timeToCollision > 0 and timeToCollision < shortestTime:
-			//shortestTime = timeToCollision
-			//firstTarger
-
-	//for (int i = 0; i < enemies.size(); i++)
-	//{
-	//	if (enemies[i]->getId() != id)
-	//	{
-	//		m_relPosition = enemies[i]->getPosition() - m_position;
-	//		m_relVelocity = enemies[i]->getVelocity() - m_velocity;
-	//		m_relSpeed = std::sqrt(m_relVelocity.x*m_relVelocity.x + m_relVelocity.y* m_relVelocity.y);
-	//		m_timeToCollision = ((m_relPosition.x * m_relVelocity.x) + (m_relPosition.y * m_relVelocity.y)) / (m_relSpeed * m_relSpeed);
-
-	//		m_distance = std::sqrt(m_relPosition.x*m_relPosition.x + m_relPosition.y* m_relPosition.y);
-
-	//		m_minSeperation = m_distance - (m_relSpeed * m_shortestTime);
-
-	//		if (m_minSeperation <= 2 * m_radius)
-	//		{
-	//			break;
-	//		}
-
-	//		if (m_timeToCollision > 0 && m_timeToCollision < m_shortestTime)
-	//		{
-	//			m_shortestTime = m_timeToCollision;
-	//			m_firstTarget = enemies[i]->getPosition();
-	//			m_firstMinSeperation = m_minSeperation;
-	//			m_firstDistance = m_distance;
-	//			m_firstRelativePos = m_relPosition;
-	//			m_firstRelativeVel = m_relVelocity;
-	//		}
-	//		
-	//	}
-	//}
-
-	//if (m_firstMinSeperation <= 0 || m_distance < 2 * m_radius) //colliding
-	//{
-	//	m_relPosition = m_firstTarget - m_position;
-	//}
-	//else
-	//{
-	//	m_relPosition = m_firstRelativePos + m_firstRelativeVel * m_shortestTime;
-	//}
-
-
-
-
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
@@ -193,7 +131,6 @@ void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 			{
 				float dot = (m_velocity.x * m_direction.x) + (m_velocity.y * m_direction.y);
 				float det = (m_velocity.x * m_direction.y) - (m_velocity.y * m_direction.x);
-
 				float angle = atan2(det, dot);
 				angle = (180 / 3.14) * angle;
 				
@@ -202,12 +139,10 @@ void Pursue::collisionAvoidance(std::vector<Enemy*> enemies) {
 				if (angle >= -m_threshold && angle <= m_threshold)
 				{
 					m_behaviour = 2;
-					m_velocity = -m_velocity;
-					m_orientation = -m_orientation;
+					kinematicFlee(enemies[i]->getPosition());
 					std::cout << "Collided Pursue" << std::endl;
-					
+						
 				}
-				
 
 			}
 			if (m_behaviour == 2 && m_distance > m_radius * 2)

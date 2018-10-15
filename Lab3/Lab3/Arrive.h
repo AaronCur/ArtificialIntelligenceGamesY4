@@ -7,13 +7,14 @@
 class Arrive : public Enemy
 {
 public:
-	Arrive();
+	Arrive(float max, float posX, float posY);
 	~Arrive();
 	float getNewOrientation(float currentOrientation, float velocity);
 	void kinematicArrive(sf::Vector2f playerPosition);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
 	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
+	void kinematicFlee(sf::Vector2f playerPosition);
 	void collisionAvoidance(std::vector<Enemy*> enemies);
 	void render(sf::RenderWindow & window);
 	sf::Vector2f getVelocity();
@@ -38,10 +39,10 @@ private:
 	sf::Font m_font;
 
 	int id = 1;
-	float m_distance;
 	sf::Vector2f m_direction;
 	sf::Vector2f m_relVelocity;
 	sf::Vector2f m_relPosition;
+	float m_distance;
 	float m_relSpeed;
 	float m_timeToCollision;
 	float m_minSeperation;
@@ -52,6 +53,9 @@ private:
 	float m_firstDistance;
 	sf::Vector2f m_firstRelativePos;
 	sf::Vector2f m_firstRelativeVel;
+
+	float m_threshold;
+	int m_behaviour;
 
 };
 

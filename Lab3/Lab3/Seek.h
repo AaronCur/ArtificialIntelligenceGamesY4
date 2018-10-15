@@ -3,17 +3,20 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <random>
+#include "Enemy.h"
 
-class Seek
+class Seek: public Enemy
 {
 public:
 	Seek();
 	~Seek();
+	void kinematicFlee(sf::Vector2f playerPosition);
 	float getNewOrientation(float currentOrientation, float velocity);
 	void kinematicSeek(sf::Vector2f playerPosition);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
 	void update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity);
+	void collisionAvoidance(std::vector<Enemy*> enemies);
 	void render(sf::RenderWindow & window);
 	sf::Vector2f getVelocity();
 	sf::Vector2f getPosition();
@@ -32,10 +35,27 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	//sf::Text m_label;
+	sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 4;
+	sf::Vector2f m_direction;
+	sf::Vector2f m_relVelocity;
+	sf::Vector2f m_relPosition;
+	float m_distance;
+	float m_relSpeed;
+	float m_timeToCollision;
+	float m_minSeperation;
+	float m_shortestTime;
+	float m_radius;
+	sf::Vector2f m_firstTarget;
+	float m_firstMinSeperation;
+	float m_firstDistance;
+	sf::Vector2f m_firstRelativePos;
+	sf::Vector2f m_firstRelativeVel;
+
+	float m_threshold;
+	int m_behaviour;
 	
 };
 

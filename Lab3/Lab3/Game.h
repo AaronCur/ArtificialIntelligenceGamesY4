@@ -9,6 +9,10 @@
 #include "Enemy.h"
 #include "Pursue.h"
 #include "Arrive.h"
+#include "Flee.h"
+#include "Seek.h"
+#include "Wander.h"
+
 
 class Game
 {

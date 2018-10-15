@@ -1,15 +1,19 @@
 #include "Arrive.h"
 
-Arrive::Arrive() :
-	m_position(1000, 500),
+Arrive::Arrive(float max, float posX, float posY) :
+	m_position(posX, posY),
 	m_velocity(0, 0),
 	shape(100.0f),
-	m_maxSpeed(1.0f),
+	m_maxSpeed(2.0f),
 	m_maxRotation(20.0f),
-	m_timeToTarget(80.0f)
+	m_timeToTarget(max),
+	m_behaviour(1),
+	m_threshold(30.0f),
+	m_radius(250.0f)
+	
 {
 
-	if (!m_texture.loadFromFile("EnemySeek.png")) {
+	if (!m_texture.loadFromFile("Enemy.png")) {
 		//do something
 	}
 
@@ -21,8 +25,8 @@ Arrive::Arrive() :
 	m_label.setFont(m_font);
 	m_label.setCharacterSize(40);
 	m_label.setString("Arrive");
-	m_label.setFillColor(sf::Color(127, 127, 127, 127));
-	m_label.setPosition(m_sprite.getPosition().x - (m_sprite.getTextureRect().width / 2), m_sprite.getPosition().y - (m_sprite.getTextureRect().width / 2));
+	m_label.setFillColor(sf::Color(127, 127, 127));
+	m_sprite.setOrigin((m_sprite.getTextureRect().width / 2), (m_sprite.getTextureRect().height / 2));
 	
 	
 
@@ -40,8 +44,6 @@ Arrive::Arrive() :
 	//m_sprite.setOrigin(m_position.x , m_position.y);
 	m_sprite.setOrigin((m_sprite.getTextureRect().width / 2), (m_sprite.getTextureRect().height / 2));
 
-	std::cout << m_sprite.getTextureRect().width << std::endl;
-	std::cout << m_sprite.getTextureRect().height << std::endl;
 
 }
 
@@ -62,79 +64,33 @@ int Arrive::getId()
 {
 	return id;
 }
+void Arrive::kinematicFlee(sf::Vector2f enemyPosition)
+{
+	m_velocity = m_position - enemyPosition;
+	//Get magnitude of vector
+	m_velocityF = std::sqrt(m_velocity.x*m_velocity.x + m_velocity.y* m_velocity.y);
+	//m_velocityF = m_velocityF * m_maxSpeed;
+	//Normalize vector
+	m_velocity.x = m_velocity.x / m_velocityF;
+	m_velocity.y = m_velocity.y / m_velocityF;
+
+	m_velocity.x = m_velocity.x * m_maxSpeed;
+	m_velocity.y = m_velocity.y * m_maxSpeed;
+
+	std::cout << m_velocity.x << std::endl;;
+	m_orientation = getNewOrientation(m_orientation, m_velocityF);
+}
 void Arrive::collisionAvoidance(std::vector<Enemy*> enemies) {
 
-	///Closest approach
-
-	//ShortestTime = infinity
-	//firstTarget = None /// target tht will collide first
-	//firstMinSeperation, firstDistance, firstRelativePos, firstRelativeVel
-	//Radius // Collision radius
-
-	//for target in targets:
-	//relativePos = target.position - charachter.position
-	//relativeVel = target.velocity - charachter.velocity
-	//relativeSpeed = relativeVel.length
-	//timeToCollision = (relativePos.RelativeVel) / (relativeSpeed*relativespeed)
-	//distance = relativePos.length()
-	//minSeperation = distance - relativeSpeed * shortestTime
-
-	//If mineperation > 2 *radius : continue
-	//If timeToCollision > 0 and timeToCollision < shortestTime:
-	//shortestTime = timeToCollision
-	//firstTarger
-
-	//for (int i = 0; i < enemies.size(); i++)
-	//{
-	//	if (enemies[i]->getId() != id)
-	//	{
-	//		m_relPosition = enemies[i]->getPosition() - m_position;
-	//		m_relVelocity = enemies[i]->getVelocity() - m_velocity;
-	//		m_relSpeed = std::sqrt(m_relVelocity.x*m_relVelocity.x + m_relVelocity.y* m_relVelocity.y);
-	//		m_timeToCollision = ((m_relPosition.x * m_relVelocity.x) + (m_relPosition.y * m_relVelocity.y)) / (m_relSpeed * m_relSpeed);
-
-	//		m_distance = std::sqrt(m_relPosition.x*m_relPosition.x + m_relPosition.y* m_relPosition.y);
-
-	//		m_minSeperation = m_distance - (m_relSpeed * m_shortestTime);
-
-	//		if (m_minSeperation <= 2 * m_radius)
-	//		{
-	//			break;
-	//		}
-
-	//		if (m_timeToCollision > 0 && m_timeToCollision < m_shortestTime)
-	//		{
-	//			m_shortestTime = m_timeToCollision;
-	//			m_firstTarget = enemies[i]->getPosition();
-	//			m_firstMinSeperation = m_minSeperation;
-	//			m_firstDistance = m_distance;
-	//			m_firstRelativePos = m_relPosition;
-	//			m_firstRelativeVel = m_relVelocity;
-	//		}
-	//		
-	//	}
-	//}
-
-	//if (m_firstMinSeperation <= 0 || m_distance < 2 * m_radius) //colliding
-	//{
-	//	m_relPosition = m_firstTarget - m_position;
-	//}
-	//else
-	//{
-	//	m_relPosition = m_firstRelativePos + m_firstRelativeVel * m_shortestTime;
-	//}
-
-
-
-
-
-	for (int i = 0; i < enemies.size(); i++)
+	for (int i = 0; i < enemies.size(); i++)//
 	{
-		if (enemies[i]->getId() != id)
+		if (enemies[i]->getPosition() != m_position)
 		{
 			//Vector player to enemy
 			m_direction = enemies[i]->getPosition() - m_position;
 			m_distance = std::sqrt(m_direction.x*m_direction.x + m_direction.y* m_direction.y);
+
+
 
 			if (m_distance <= m_radius)
 			{
@@ -142,12 +98,20 @@ void Arrive::collisionAvoidance(std::vector<Enemy*> enemies) {
 				float det = (m_velocity.x * m_direction.y) - (m_velocity.y * m_direction.x);
 
 				float angle = atan2(det, dot);
+				angle = (180 / 3.14) * angle;
 
-				if (angle >= -20 && angle <= 20)
+				if (angle >= -m_threshold && angle <= m_threshold)
 				{
-					
-					//std::cout << "Collided Arrive" << std::endl;
+					m_behaviour = 2;
+					kinematicFlee(enemies[i]->getPosition());
+					std::cout << "Collided Arrive" << std::endl;
+
 				}
+
+			}
+			if (m_behaviour == 2 && m_distance > m_radius * 2)
+			{
+				m_behaviour = 1;
 			}
 
 
@@ -238,8 +202,11 @@ void Arrive::kinematicArrive(sf::Vector2f playerPosition)
 
 void Arrive::update(sf::Vector2f playerPosition, sf::Vector2f playerVelocity)
 {
-
-	kinematicArrive(playerPosition);
+	if (m_behaviour == 1)
+	{
+		kinematicArrive(playerPosition);
+	}
+	
 
 	m_position = m_position + m_velocity;
 

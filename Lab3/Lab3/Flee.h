@@ -18,8 +18,10 @@ public:
 	sf::Vector2f getVelocity();
 	sf::Vector2f getPosition();
 	int getId();
+	void collisionAvoidance(std::vector<Enemy*> enemies);
 
 private:
+	
 	float m_timeToTarget;
 	sf::Vector2f m_position;
 	float m_orientation;
@@ -32,9 +34,27 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	//sf::Text m_label;
+	sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 2;
+	sf::Vector2f m_direction;
+	float m_distance;
+	sf::Vector2f m_relVelocity;
+	sf::Vector2f m_relPosition;
+	float m_relSpeed;
+	float m_timeToCollision;
+	float m_minSeperation;
+	float m_shortestTime;
+	float m_radius;
+	sf::Vector2f m_firstTarget;
+	float m_firstMinSeperation;
+	float m_firstDistance;
+	sf::Vector2f m_firstRelativePos;
+	sf::Vector2f m_firstRelativeVel;
+
+	float m_threshold;
+	int m_behaviour;
+
 };
 

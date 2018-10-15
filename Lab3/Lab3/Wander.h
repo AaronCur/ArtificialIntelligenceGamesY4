@@ -3,7 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <random>
-class Wander 
+#include "Enemy.h"
+
+class Wander : public Enemy
 {
 public:
 	Wander();
@@ -12,6 +14,8 @@ public:
 	void kinematicWander(sf::Vector2f playerPosition);
 	void respawn(float x, float y);
 	float getRandom(int x, int y);
+	void kinematicFlee(sf::Vector2f playerPosition);
+	void collisionAvoidance(std::vector<Enemy*> enemies);
 	void update(sf::Vector2f playerPostion, sf::Vector2f playerVelocity);
 	void render(sf::RenderWindow & window);
 	sf::Vector2f getVelocity();
@@ -30,10 +34,28 @@ private:
 	sf::Texture m_texture;
 	sf::CircleShape shape;
 	sf::RectangleShape m_rect;
-	//sf::Text m_label;
 	sf::Font m_font;
 
 	int id = 5;
+
+	sf::Vector2f m_direction;
+	float m_distance;
+	sf::Text m_label;
+	sf::Vector2f m_relVelocity;
+	sf::Vector2f m_relPosition;
+	float m_relSpeed;
+	float m_timeToCollision;
+	float m_minSeperation;
+	float m_shortestTime;
+	float m_radius;
+	sf::Vector2f m_firstTarget;
+	float m_firstMinSeperation;
+	float m_firstDistance;
+	sf::Vector2f m_firstRelativePos;
+	sf::Vector2f m_firstRelativeVel;
+
+	float m_threshold;
+	int m_behaviour;
 };
 
 

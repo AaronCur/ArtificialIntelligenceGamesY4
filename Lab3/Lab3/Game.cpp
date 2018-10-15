@@ -7,8 +7,11 @@ Game::Game() :
 	m_window(sf::VideoMode(1920, 1080), "AI Lab2B", sf::Style::Default)
 {
 	m_player = new Player();
-	Enemy* m_pursue = new Pursue();
-	Enemy* m_arrive = new Arrive();
+	Enemy* m_pursue = new Pursue(*this);
+	Enemy* m_arriveFast = new Arrive(60.0f, 100.0f, 100.0f);
+	Enemy* m_arriveSlow = new Arrive(150.0f, 1720.0f, 1000.0f);
+	Enemy* m_seek = new Seek();
+	Enemy* m_wander = new Wander();
 
 	//Factory* factory = new EnemyFactory;
 
@@ -19,7 +22,11 @@ Game::Game() :
 	enemies.push_back(factory->CreateEnemy());*/
 
 	enemies.push_back(m_pursue);
-	enemies.push_back(m_arrive);
+	enemies.push_back(m_arriveFast);
+	enemies.push_back(m_arriveSlow);
+	enemies.push_back(m_seek);
+	//enemies.push_back(m_flee);
+	enemies.push_back(m_wander);
 }
 
 /// <summary>
