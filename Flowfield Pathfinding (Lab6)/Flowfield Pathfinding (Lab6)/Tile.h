@@ -18,6 +18,7 @@ public:
 
 	void update();
 	void mouseDetection(sf::Vector2i mousePos, int val);
+	void setCost(int cost);
 	void render(sf::RenderWindow &window);
 
 	void setCurrentState(State s);
@@ -34,6 +35,7 @@ public:
 	State m_currentState = NONE;
 	int m_tileSize;
 	float m_tileScale;
+	int m_cost = 0;
 private:
 
 };

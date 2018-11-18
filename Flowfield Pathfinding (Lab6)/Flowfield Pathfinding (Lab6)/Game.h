@@ -16,6 +16,8 @@ private:
 	void processEvents();
 	void processGameEvents(sf::Event& event);
 	void render();
+	void initGrid();
+	void closeNeighbours();
 
 protected:
 	sf::RenderWindow m_window;

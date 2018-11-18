@@ -68,6 +68,11 @@ void Tile::mouseDetection(sf::Vector2i mousePos, int val)
 	
 }
 
+void Tile::setCost(int cost)
+{
+	m_cost = cost;
+}
+
 void Tile::render(sf::RenderWindow &window)
 {
 	window.draw(rectangle);

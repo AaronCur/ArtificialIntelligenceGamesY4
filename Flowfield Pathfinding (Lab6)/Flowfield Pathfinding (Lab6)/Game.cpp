@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <limits>
 
 /// <summary>
 /// 
@@ -119,6 +120,8 @@ void Game::processGameEvents(sf::Event& event)
 
 			m_rightPress = true;
 
+			initGrid();
+
 		}
 		else if (!sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
@@ -188,6 +191,38 @@ void Game::update(double dt)
 		}
 
 	}
+}
+void Game::initGrid()
+{
+	for (int i = 0; i < m_gridSize; i++)
+	{
+		for (int j = 0; j < m_gridSize; j++)
+		{
+			if (m_tileGrid[i][j]->getCurrentState() == OBSTACLE)
+			{
+				m_tileGrid[i][j]->setCost(std::numeric_limits<int>::max());
+			}
+			m_tileGrid[i][j]->render(m_window);
+		}
+
+	}
+
+	m_goalTile->setCost(0);
+
+	Tile *m_toVisit 
+
+
+}
+void Game::closeNeighbours(sf::Vector2f v)
+{
+	std::vector<std::vector<int>> result;
+
+	if (v.x > 0) {
+		result.push_back(new std::vector<int>(v.x - 1, v.y));
+		result.push_back(new std::vector<int>(v.x - 1, v.y))
+	}
+
+
 }
 
 /// <summary>
