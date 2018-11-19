@@ -1,9 +1,11 @@
 #include "Tile.h"
 #include <iostream>
-Tile::Tile(float x, float y, int tileSize, float tileScale) :
+Tile::Tile(float x, float y, int tileSize, float tileScale, int xPos, int yPos) :
 	m_position(x, y),
 	m_tileSize(tileSize),
-	m_tileScale(tileScale)
+	m_tileScale(tileScale),
+	m_xPos(xPos),
+	m_yPos(yPos)
 {
 
 
@@ -11,6 +13,7 @@ Tile::Tile(float x, float y, int tileSize, float tileScale) :
 	rectangle.setOutlineThickness(2);
 	rectangle.setOutlineColor(sf::Color::Blue);
 	rectangle.setPosition(x, y);
+
 }
 
 Tile::~Tile()

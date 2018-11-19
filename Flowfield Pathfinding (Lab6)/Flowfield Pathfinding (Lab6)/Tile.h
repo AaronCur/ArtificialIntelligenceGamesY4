@@ -13,7 +13,7 @@ enum State
 class Tile
 {
 public:
-	Tile(float x, float y, int tileSize, float m_tileScale);
+	Tile(float x, float y, int tileSize, float m_tileScale, int xPos, int yPos);
 	~Tile();
 
 	void update();
@@ -36,6 +36,10 @@ public:
 	int m_tileSize;
 	float m_tileScale;
 	int m_cost = 0;
+
+	int m_xPos;
+	int m_yPos;
+
 private:
 
 };

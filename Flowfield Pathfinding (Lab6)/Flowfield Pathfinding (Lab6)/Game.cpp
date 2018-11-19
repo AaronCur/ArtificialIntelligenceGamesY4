@@ -1,17 +1,18 @@
 #include "Game.h"
 #include <limits>
+#include <list>
 
 /// <summary>
 /// 
 /// </summary>
 Game::Game() :
-	m_window(sf::VideoMode(1280, 600), "AI Lab6", sf::Style::Default)
+	m_window(sf::VideoMode(1920, 1920), "AI Lab6", sf::Style::Default)
 {
 	for (int i = 0; i < m_gridSize; i++)
 	{
 		for (int j = 0; j < m_gridSize; j++)
 		{
-			m_tileGrid[j][i] = new Tile(x, y, m_tileSize, m_tileScale);
+			m_tileGrid[j][i] = new Tile(x, y, m_tileSize, m_tileScale, j, i);
 			x = x + m_tileSize * m_tileScale;
 		}
 
@@ -120,7 +121,7 @@ void Game::processGameEvents(sf::Event& event)
 
 			m_rightPress = true;
 
-			initGrid();
+			//initGrid();
 
 		}
 		else if (!sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -192,7 +193,7 @@ void Game::update(double dt)
 
 	}
 }
-void Game::initGrid()
+void Game::initGrid(Tile m_goalTile)
 {
 	for (int i = 0; i < m_gridSize; i++)
 	{
@@ -207,23 +208,71 @@ void Game::initGrid()
 
 	}
 
-	m_goalTile->setCost(0);
+	//bool * visited = new bool[v];
 
-	Tile *m_toVisit 
+	//for(int i = 0; i < v  
+
+	//Create a queue
+	std::list<Tile> tileQueue;
+
+	tileQueue.push_back(m_goalTile);
+
+	m_goalTile.setCost(0);
+
+	// loop through the queue while there are nodes in it.
+		while (tileQueue.size() != 0) {
+			// process the node at the front of the queue.
+			//f_visit(nodeQueue.front());
+
+			m_goalTile = tileQueue.front();
+			tileQueue.pop_front();
+
+			// add all of the child nodes that have not been 
+			// marked into the queue
+			//auto iter = nodeQueue.front()->arcList().begin();
+			//auto endIter = nodeQueue.front()->arcList().end();
+
+			//for (; iter != endIter; iter++) {
+			//	if ((*iter).node()->marked() == false) {
+			//		// mark the node and add it to the queue.
+			//		(*iter).node()->setMarked(true);
+			//		nodeQueue.push((*iter).node());
+			//	}
+			//}
+
+
+			for (int i = 0; i < tileQueue.size(); i++) {
+
+				for (int i = 0; i < tileQueue.size(); i++) {
+
+					
+				}
+			}
+
+			auto iter = tileQueue.begin();
+			auto endIter = tileQueue.end();
+
+			for (int i = 0; i < tileQueue.size(); i++) {
+
+				if (m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == 0)
+				{
+					m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == m_tileGrid[iter->m_xPos][iter->m_yPos]->m_cost + 1;
+				}
+
+
+			}
+
+			// dequeue the current node.
+			//nodeQueue.pop();
+		}
+
+
+		
+	
 
 
 }
-void Game::closeNeighbours(sf::Vector2f v)
-{
-	std::vector<std::vector<int>> result;
 
-	if (v.x > 0) {
-		result.push_back(new std::vector<int>(v.x - 1, v.y));
-		result.push_back(new std::vector<int>(v.x - 1, v.y))
-	}
-
-
-}
 
 /// <summary>
 /// 

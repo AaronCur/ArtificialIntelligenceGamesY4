@@ -16,7 +16,7 @@ private:
 	void processEvents();
 	void processGameEvents(sf::Event& event);
 	void render();
-	void initGrid();
+	void initGrid(Tile m_goalTile);
 	void closeNeighbours();
 
 protected:
@@ -24,7 +24,7 @@ protected:
 
 	static const int m_gridSize = 50;
 	static const int m_tileSize = 50;
-	float m_tileScale = 0.5;
+	float m_tileScale = 1;
 
 	Tile *m_tileGrid[m_gridSize][m_gridSize];
 
