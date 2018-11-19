@@ -19,6 +19,8 @@ public:
 	void update();
 	void mouseDetection(sf::Vector2i mousePos, int val);
 	void setCost(int cost);
+	int getCost();
+	
 	void render(sf::RenderWindow &window);
 
 	void setCurrentState(State s);
@@ -26,8 +28,8 @@ public:
 	sf::Vector2f m_position;
 	sf::RectangleShape rectangle;
 	sf::Font m_font;
-	sf::Text m_name;
-	sf::String m_nameText;
+	sf::Text m_costText;
+	sf::String m_costString;
 
 	sf::Text m_heuristictext;
 	sf::String m_heuristicString;

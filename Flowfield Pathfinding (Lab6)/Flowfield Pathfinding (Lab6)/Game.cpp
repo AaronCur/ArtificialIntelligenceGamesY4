@@ -1,12 +1,13 @@
 #include "Game.h"
 #include <limits>
 #include <list>
+#include <queue>
 
 /// <summary>
 /// 
 /// </summary>
 Game::Game() :
-	m_window(sf::VideoMode(1920, 1920), "AI Lab6", sf::Style::Default)
+	m_window(sf::VideoMode(500, 500), "AI Lab6", sf::Style::Default)
 {
 	for (int i = 0; i < m_gridSize; i++)
 	{
@@ -19,6 +20,7 @@ Game::Game() :
 		x = 0;
 		y = y + m_tileSize * m_tileScale;
 	}
+
 }
 
 /// <summary>
@@ -121,7 +123,7 @@ void Game::processGameEvents(sf::Event& event)
 
 			m_rightPress = true;
 
-			//initGrid();
+			initGrid(*m_goalTile);
 
 		}
 		else if (!sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -203,67 +205,77 @@ void Game::initGrid(Tile m_goalTile)
 			{
 				m_tileGrid[i][j]->setCost(std::numeric_limits<int>::max());
 			}
-			m_tileGrid[i][j]->render(m_window);
 		}
 
 	}
 
-	//bool * visited = new bool[v];
-
-	//for(int i = 0; i < v  
-
-	//Create a queue
 	std::list<Tile> tileQueue;
 
+	
 	tileQueue.push_back(m_goalTile);
 
 	m_goalTile.setCost(0);
 
 	// loop through the queue while there are nodes in it.
 		while (tileQueue.size() != 0) {
-			// process the node at the front of the queue.
-			//f_visit(nodeQueue.front());
 
 			m_goalTile = tileQueue.front();
-			tileQueue.pop_front();
+			//tileQueue.pop_front();
 
-			// add all of the child nodes that have not been 
-			// marked into the queue
-			//auto iter = nodeQueue.front()->arcList().begin();
-			//auto endIter = nodeQueue.front()->arcList().end();
+			auto iter = tileQueue.front();
+			auto endIter = tileQueue.back();
 
 			//for (; iter != endIter; iter++) {
-			//	if ((*iter).node()->marked() == false) {
-			//		// mark the node and add it to the queue.
-			//		(*iter).node()->setMarked(true);
-			//		nodeQueue.push((*iter).node());
-			//	}
-			//}
-
-
-			for (int i = 0; i < tileQueue.size(); i++) {
-
-				for (int i = 0; i < tileQueue.size(); i++) {
-
-					
-				}
-			}
-
-			auto iter = tileQueue.begin();
-			auto endIter = tileQueue.end();
-
-			for (int i = 0; i < tileQueue.size(); i++) {
-
-				if (m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == 0)
+			for (auto iter = tileQueue.begin(); iter != tileQueue.end(); ++iter){
+				
+				if (iter->m_yPos != 0 && m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == 0 )
 				{
-					m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == m_tileGrid[iter->m_xPos][iter->m_yPos]->m_cost + 1;
+					m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->setCost( m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos][iter->m_yPos - 1]);
 				}
-
-
+			
+				if ( iter->m_xPos != m_gridSize && iter->m_yPos != 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->m_cost == 0)
+				{
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]);
+				}
+				if (iter->m_xPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->m_cost == 0)
+				{
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos]);
+				}
+				if (iter->m_xPos != m_gridSize - 1 && iter->m_yPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->m_cost == 0)
+				{
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]);
+				}
+				if ( iter->m_yPos != 0 && m_gridSize && m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->m_cost == 0 )
+				{
+					m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos][iter->m_yPos + 1]);
+				}
+				if (iter->m_yPos != m_gridSize - 1 && iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->m_cost == 0 )
+				{
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]);
+				}
+				if (iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->m_cost == 0 )
+				{
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos]);
+				}
+				if (iter->m_yPos != 0 && iter->m_xPos !=0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->m_cost == 0 )
+				{
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]);
+				}
+				
+				//tileQueue.remove(*iter);
 			}
 
 			// dequeue the current node.
-			//nodeQueue.pop();
+			tileQueue.pop_back();
+			//tileQueue.pop_back();
 		}
 
 

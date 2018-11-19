@@ -22,7 +22,7 @@ private:
 protected:
 	sf::RenderWindow m_window;
 
-	static const int m_gridSize = 50;
+	static const int m_gridSize = 5;
 	static const int m_tileSize = 50;
 	float m_tileScale = 1;
 

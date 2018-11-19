@@ -8,7 +8,15 @@ Tile::Tile(float x, float y, int tileSize, float tileScale, int xPos, int yPos) 
 	m_yPos(yPos)
 {
 
+	if (!m_font.loadFromFile("arial.ttf"))
+	{
+		// error...
+	}
 
+	m_costText.setFont(m_font);
+	m_costText.setString(std::to_string(m_cost));
+	//m_costText.setFillColor(sf::Color::Black);
+	m_costText.setPosition(m_position);
 	rectangle.setSize(sf::Vector2f(m_tileSize * m_tileScale, m_tileSize * m_tileScale));
 	rectangle.setOutlineThickness(2);
 	rectangle.setOutlineColor(sf::Color::Blue);
@@ -74,9 +82,15 @@ void Tile::mouseDetection(sf::Vector2i mousePos, int val)
 void Tile::setCost(int cost)
 {
 	m_cost = cost;
+	m_costText.setString(std::to_string(m_cost));
+}
+int Tile::getCost()
+{
+	return m_cost;
 }
 
 void Tile::render(sf::RenderWindow &window)
 {
 	window.draw(rectangle);
+	window.draw(m_costText);
 }
