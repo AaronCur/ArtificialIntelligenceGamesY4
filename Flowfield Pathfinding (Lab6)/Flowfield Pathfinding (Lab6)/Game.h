@@ -12,18 +12,18 @@ public:
 	void run();
 
 private:
-	void update(double dt);
+	void update();
 	void processEvents();
 	void processGameEvents(sf::Event& event);
 	void render();
-	void initGrid(Tile m_goalTile);
-	void closeNeighbours();
+	void reset();
+	void initGrid(int posX, int posY);
 
 protected:
 	sf::RenderWindow m_window;
 
-	static const int m_gridSize = 5;
-	static const int m_tileSize = 50;
+	static const int m_gridSize = 25;
+	static const int m_tileSize = 60;
 	float m_tileScale = 1;
 
 	Tile *m_tileGrid[m_gridSize][m_gridSize];
@@ -38,6 +38,7 @@ protected:
 
 	Tile * m_startTile;
 	Tile * m_goalTile;
+	sf::Font m_font;
 
 	bool m_leftPress = false;
 	bool m_rightPress = false;

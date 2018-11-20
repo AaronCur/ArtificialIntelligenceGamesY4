@@ -7,18 +7,34 @@
 /// 
 /// </summary>
 Game::Game() :
-	m_window(sf::VideoMode(500, 500), "AI Lab6", sf::Style::Default)
+	m_window(sf::VideoMode(2000, 2000), "AI Lab6", sf::Style::Default)
 {
+
+	if (!m_font.loadFromFile("ARLRDBD.ttf"))
+	{
+		// error...
+	}
+
+
 	for (int i = 0; i < m_gridSize; i++)
 	{
 		for (int j = 0; j < m_gridSize; j++)
 		{
-			m_tileGrid[j][i] = new Tile(x, y, m_tileSize, m_tileScale, j, i);
+			m_tileGrid[j][i] = new Tile(x + 10, y + 10, m_tileSize, m_tileScale, j, i, m_font);
 			x = x + m_tileSize * m_tileScale;
 		}
 
 		x = 0;
 		y = y + m_tileSize * m_tileScale;
+	}
+
+	for (int i = 0; i < m_gridSize; i++)
+	{
+
+		m_tileGrid[0][i]->setCurrentState(OBSTACLE);
+		m_tileGrid[i][0]->setCurrentState(OBSTACLE);
+		m_tileGrid[m_gridSize - 1][i]->setCurrentState(OBSTACLE);
+		m_tileGrid[i][m_gridSize - 1]->setCurrentState(OBSTACLE);
 	}
 
 }
@@ -28,6 +44,7 @@ Game::Game() :
 /// </summary>
 void Game::run()
 {
+
 	sf::Clock clock;
 	sf::Int32 lag = 0;
 
@@ -50,8 +67,7 @@ void Game::run()
 		timeSinceLastUpdate += clock.restart();
 		if (timeSinceLastUpdate > timePerFrame)
 		{
-			update(timeSinceLastUpdate.asMilliseconds());
-			timeSinceLastUpdate = sf::Time::Zero;
+			update();
 		}
 
 		render();
@@ -76,7 +92,6 @@ void Game::processGameEvents(sf::Event& event)
 	//mouse.getPosition();
 	m_mousePos = sf::Mouse::getPosition(m_window);
 
-	std::cout << m_mousePos.x << std::endl;
 	
 	//std::cout << "Current State :" << m_tileGrid[m_tilePosX][m_tilePosY]->getCurrentState() << std::endl;
 	if (m_mousePos.x > 0 && m_mousePos.x < m_window.getSize().x
@@ -117,14 +132,17 @@ void Game::processGameEvents(sf::Event& event)
 				m_goalTile->setCurrentState(NONE);
 			}
 
-			m_goalTile = m_tileGrid[m_tilePosX][m_tilePosY];
+			if (m_tileGrid[m_tilePosX][m_tilePosY]->getCurrentState() != OBSTACLE)
+			{
+				m_goalTile = m_tileGrid[m_tilePosX][m_tilePosY];
 
-			m_tileGrid[m_tilePosX][m_tilePosY]->setCurrentState(GOAL);
+				m_tileGrid[m_tilePosX][m_tilePosY]->setCurrentState(GOAL);
 
-			m_rightPress = true;
+				m_rightPress = true;
 
-			initGrid(*m_goalTile);
-
+				initGrid(m_tilePosX, m_tilePosY);
+			}
+			
 		}
 		else if (!sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
@@ -146,15 +164,47 @@ void Game::processGameEvents(sf::Event& event)
 
 
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			
+			reset();
+
+		}
 	}
 
 	
 }
 
+void Game::reset()
+{
+
+
+	for (int i = 0; i < m_gridSize; i++)
+	{
+		for (int j = 0; j < m_gridSize; j++)
+		{
+			m_tileGrid[j][i]->setCost(0);
+			m_tileGrid[j][i]->setCurrentState(NONE);
+			
+		}
+
+	}
+
+	for (int i = 0; i < m_gridSize; i++)
+	{
+
+		m_tileGrid[0][i]->setCurrentState(OBSTACLE);
+		m_tileGrid[i][0]->setCurrentState(OBSTACLE);
+		m_tileGrid[m_gridSize - 1][i]->setCurrentState(OBSTACLE);
+		m_tileGrid[i][m_gridSize - 1]->setCurrentState(OBSTACLE);
+	}
+}
+
 /// <summary>
 /// 
 /// </summary>
-void Game::update(double dt)
+void Game::update()
 {
 	
 
@@ -162,40 +212,12 @@ void Game::update(double dt)
 	{
 		for (int j = 0; j < m_gridSize; j++)
 		{
-		//	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_leftPress == false)
-		//	{
-		//		m_leftPress = true;
-		//		/*if (m_startTile != NULL)
-		//		{
-		//			m_startTile->setCurrentState(NONE);
-		//		}*/
-
-		//		m_startTile = m_tileGrid[i][j];
-		//		m_tileGrid[i][j]->mouseDetection(m_mousePos, 1);
-		//		m_tileGrid[i][j]->setCurrentState(START);
-
-		//		
-
-		//	}
-		//	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
-		//	{
-		//		m_leftPress = false;
-		//	}
-
-
-		//	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-		//	{
-
-		//		m_tileGrid[i][j]->mouseDetection(m_mousePos, 2);
-
-		//	}
-		
 			m_tileGrid[i][j]->update();
 		}
 
 	}
 }
-void Game::initGrid(Tile m_goalTile)
+void Game::initGrid(int posX, int posY)
 {
 	for (int i = 0; i < m_gridSize; i++)
 	{
@@ -212,77 +234,72 @@ void Game::initGrid(Tile m_goalTile)
 	std::list<Tile> tileQueue;
 
 	
-	tileQueue.push_back(m_goalTile);
+	tileQueue.push_back(*m_tileGrid[posX][posY]);
 
-	m_goalTile.setCost(0);
+	m_tileGrid[posX][posY]->setCost(0);
+	int i = 0;
 
-	// loop through the queue while there are nodes in it.
-		while (tileQueue.size() != 0) {
-
-			m_goalTile = tileQueue.front();
-			//tileQueue.pop_front();
-
-			auto iter = tileQueue.front();
-			auto endIter = tileQueue.back();
-
+			auto iter = tileQueue.begin();
+			
 			//for (; iter != endIter; iter++) {
-			for (auto iter = tileQueue.begin(); iter != tileQueue.end(); ++iter){
-				
-				if (iter->m_yPos != 0 && m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->m_cost == 0 )
+			while (tileQueue.size() != 0) {
+				i++;
+				std::cout << i << std::endl;
+				if (iter->m_yPos != 0 && m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->getCost()== 0 && m_tileGrid[iter->m_xPos][iter->m_yPos -1]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->setCost( m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos][iter->m_yPos - 1]->setRotation(90);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos][iter->m_yPos - 1]);
 				}
 			
-				if ( iter->m_xPos != m_gridSize && iter->m_yPos != 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->m_cost == 0)
+				/*if( iter->m_xPos != m_gridSize - 1 && iter->m_yPos != 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->getCost() == 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]->setRotation(112.5);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos - 1]);
-				}
-				if (iter->m_xPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->m_cost == 0)
+				}*/
+				if (iter->m_xPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->getCost() == 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos + 1][iter->m_yPos]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos ]->setRotation(180);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos]);
 				}
-				if (iter->m_xPos != m_gridSize - 1 && iter->m_yPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->m_cost == 0)
+				/*if (iter->m_xPos != m_gridSize - 1 && iter->m_yPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->getCost() == 0 && m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]->setRotation(202.5);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos + 1][iter->m_yPos + 1]);
-				}
-				if ( iter->m_yPos != 0 && m_gridSize && m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->m_cost == 0 )
+				}*/
+				if ( iter->m_xPos != m_gridSize - 1 && m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->getCost() == 0 && m_tileGrid[iter->m_xPos ][iter->m_yPos + 1]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos][iter->m_yPos + 1]->setRotation(270);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos][iter->m_yPos + 1]);
 				}
-				if (iter->m_yPos != m_gridSize - 1 && iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->m_cost == 0 )
+				/*if (iter->m_yPos != m_gridSize - 1 && iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->getCost() == 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->getCurrentState()!= GOAL)
 				{
 					m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]->setRotation(292.5);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos + 1]);
-				}
-				if (iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->m_cost == 0 )
+				}*/
+				if (iter->m_xPos != 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->getCost() == 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos]->setRotation(0);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos]);
 				}
-				if (iter->m_yPos != 0 && iter->m_xPos !=0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->m_cost == 0 )
+				if (iter->m_yPos != 0 && iter->m_xPos !=0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->getCost() == 0 && m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->getCurrentState() != GOAL)
 				{
 					m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->setCost(m_tileGrid[iter->m_xPos][iter->m_yPos]->getCost() + 1);
+					m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]->setRotation(22.5);
 					tileQueue.push_back(*m_tileGrid[iter->m_xPos - 1][iter->m_yPos - 1]);
 				}
 				
 				//tileQueue.remove(*iter);
+				iter++;
+				tileQueue.pop_front();
 			}
-
-			// dequeue the current node.
-			tileQueue.pop_back();
-			//tileQueue.pop_back();
-		}
-
-
-		
 	
-
-
 }
 
 
