@@ -5,7 +5,7 @@
 class Button
 {
 public:
-	Button(sf::Font font);
+	Button(sf::Font font, sf::String string, float posX, float posY);
 	~Button();
 
 	int m_buttonVal = 0.0f;
@@ -13,8 +13,8 @@ public:
 	bool active = false;
 	bool selected = false;
 	bool click = false;
-	void update(sf::Time);
-	void mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest);
+	void update();
+	void mouseDetection(sf::Vector2i mousePos);
 	void render(sf::RenderWindow &window);
 	sf::Vector2f m_position;
 	sf::Vector2f m_size;

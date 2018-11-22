@@ -15,7 +15,8 @@ enum State
 	NONE,
 	START,
 	GOAL,
-	OBSTACLE
+	OBSTACLE,
+	PATH
 };
 
 
@@ -29,6 +30,7 @@ public:
 	void mouseDetection(sf::Vector2i mousePos, int val);
 	void setRotation(float rot);
 	void setCost(int cost);
+	void setPrevious(int x, int y);
 	int getCost();
 
 	void setDrawState(Draw ds);
@@ -64,6 +66,8 @@ public:
 	float m_rotation = 0;
 
 	sf::RectangleShape vector;
+
+	std::pair < int, int> m_previous;
 
 private:
 

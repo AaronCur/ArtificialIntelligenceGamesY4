@@ -1,15 +1,16 @@
 #include "Button.h"
 #include <iostream>
-Button::Button(sf::Font font) :
-	m_position(800, 250),
-	m_size(200, 100),
-	m_button1("Start"),
-	m_button2("Reset"),
+Button::Button(sf::Font font, sf::String string, float posX, float posY) :
+	m_position(posX, posY),
+	m_size(400, 200),
+	m_button1(string),
 	m_font(font)
 {
 
 	m_name.setFont(m_font);
-	m_name.setCharacterSize(40);
+	m_name.setCharacterSize(90);
+	m_name.setString(m_button1);
+	m_name.setPosition(m_position.x + 5, m_position.y + 2);
 
 }
 
@@ -18,23 +19,11 @@ Button::~Button()
 
 }
 
-void Button::update(sf::Time t)
+void Button::update()
 {
-	switch (m_buttonVal)
-	{
-	case 0:
-		m_name.setString(m_button1);
-		m_name.setPosition(m_position.x + 5, m_position.y + 2);
-		break;
-	case 1:
-		m_name.setString(m_button2);
-		m_name.setPosition(m_position.x, m_position.y + 2);
-		break;
-	default:
-		break;
-	}
+
 }
-void Button::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest)
+void Button::mouseDetection(sf::Vector2i mousePos)
 {
 
 	if ((m_position.x < mousePos.x) &&
@@ -43,21 +32,9 @@ void Button::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdes
 		(m_position.y < mousePos.y))
 	{
 
-		if (m_buttonVal == 0 && selected == false && sdest.size() == 2)
-		{
-			m_buttonVal = 1;
 			selected = true;
-
-		}
-		else if (m_buttonVal == 1 && selected == false)
-		{
-			m_buttonVal = 0;
-			selected = true;
-
-		}
-
 	}
-
+	
 }
 
 

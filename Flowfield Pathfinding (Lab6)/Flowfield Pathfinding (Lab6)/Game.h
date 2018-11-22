@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Tile.h"
+#include "Button.h"
 
 
 class Game
@@ -18,11 +19,12 @@ private:
 	void render();
 	void reset();
 	void initGrid(int posX, int posY);
+	void getPath(Tile m_startTile);
 
 protected:
 	sf::RenderWindow m_window;
 
-	static const int m_gridSize = 25;
+	static const int m_gridSize = 30;
 	static const int m_tileSize = 60;
 	float m_tileScale = 1;
 
@@ -40,9 +42,27 @@ protected:
 	Tile * m_goalTile;
 	sf::Font m_font;
 
+	Button *m_button;
+	Button *m_vecButton;
+	Button *m_costButton;
+	Button *m_clearButton;
+
 	bool m_leftPress = false;
 	bool m_rightPress = false;
 	//Enemy* m_pursue;
 
+
+	sf::Text m_startText;
+
+	sf::Text m_goalText;
+
+	sf::Text m_obstacleText;
+
+	sf::Text m_pathText;
+	
+	sf::RectangleShape m_startRec;
+	sf::RectangleShape m_goalRec;
+	sf::RectangleShape m_obstacleRec;
+	sf::RectangleShape m_pathRec;
 
 };

@@ -9,8 +9,6 @@ Tile::Tile(float x, float y, int tileSize, float tileScale, int xPos, int yPos, 
 	m_font(font)
 {
 
-	
-
 	m_costText.setFont(m_font);
 	m_costText.setString(std::to_string(m_cost));
 	m_costText.setFillColor(sf::Color::Black);
@@ -20,13 +18,14 @@ Tile::Tile(float x, float y, int tileSize, float tileScale, int xPos, int yPos, 
 	rectangle.setOutlineColor(sf::Color(200, 200, 200));
 	rectangle.setPosition(x, y);
 
-
 	vector.setSize(sf::Vector2f(25, 1));
 	vector.setFillColor(sf::Color::Red);
 	vector.setOutlineColor(sf::Color::Red);
 	vector.setOutlineThickness(1);
 	vector.setPosition(m_position.x + ((m_tileSize * m_tileScale) / 2), m_position.y + ((m_tileSize * m_tileScale) / 2));
 	vector.setRotation(m_rotation);
+
+
 }
 
 Tile::~Tile()
@@ -74,12 +73,25 @@ Draw Tile::getDrawState() {
 
 void Tile::update()
 {
-	
+	if (m_cost == 0) {
+		vector.setSize(sf::Vector2f(1, 1));
+	}
+	else {
+		vector.setSize(sf::Vector2f(25, 1));
+	}
 
 	switch (m_currentState)
 	{
 	case NONE:
-		rectangle.setFillColor(sf::Color(255 - (m_cost * 2.3), 255 - (m_cost * 2.3),255 - (m_cost * 2.3)));
+		if (255 - (m_cost * 1.7) > 0)
+		{
+			rectangle.setFillColor(sf::Color(255 - (m_cost * 1.8), 255 - (m_cost * 1.8), 255));
+		}
+		else
+		{
+			rectangle.setFillColor(sf::Color(255, 255, 255));
+		}
+		
 		break;
 	case START:
 		rectangle.setFillColor(sf::Color::Green);
@@ -89,6 +101,9 @@ void Tile::update()
 		break;
 	case OBSTACLE:
 		rectangle.setFillColor(sf::Color(45,45,45));
+		break;
+	case PATH:
+		rectangle.setFillColor(sf::Color(50, 255, 255));
 		break;
 	default:
 		break;
@@ -124,6 +139,11 @@ int Tile::getCost()
 	return m_cost;
 }
 
+void Tile::setPrevious(int x, int y) {
+
+	m_previous = std::make_pair(x, y);
+}
+
 void Tile::render(sf::RenderWindow &window)
 {
 	window.draw(rectangle);
@@ -131,16 +151,11 @@ void Tile::render(sf::RenderWindow &window)
 	switch (m_drawState)
 	{
 	case FLOW:
-		if (m_currentState == NONE)
+		if (m_currentState == NONE || m_currentState == PATH)
 		window.draw(vector);
 		break;
 	case COST:
-		if (m_currentState == NONE)
-		window.draw(m_costText);
-		break;
-	case BOTH:
-		if (m_currentState == NONE)
-		window.draw(vector);
+		if (m_currentState == NONE || m_currentState == PATH)
 		window.draw(m_costText);
 		break;
 	default:
