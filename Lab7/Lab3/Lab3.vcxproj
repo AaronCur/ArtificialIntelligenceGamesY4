@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arrive.cpp" />
+    <ClCompile Include="Fuzzy.cpp" />
     <ClCompile Include="Wander.cpp" />
     <ClCompile Include="Flee.cpp" />
     <ClCompile Include="Seek.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrive.h" />
+    <ClInclude Include="Fuzzy.h" />
     <ClInclude Include="Wander.h" />
     <ClInclude Include="Flee.h" />
     <ClInclude Include="Enemy.h" />

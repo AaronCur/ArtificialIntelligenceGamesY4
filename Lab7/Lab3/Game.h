@@ -12,6 +12,7 @@
 #include "Flee.h"
 #include "Seek.h"
 #include "Wander.h"
+#include "Fuzzy.h"
 
 
 class Game
@@ -31,6 +32,7 @@ protected:
 	//Enemy* m_pursue;
 
 	std::vector<Enemy*> enemies;
+	Fuzzy* m_fuzzy;
 	
 };
 #endif // !GAME_H
