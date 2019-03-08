@@ -81,13 +81,13 @@ double Fuzzy::FuzzyNOT(double A)
 
 void Fuzzy::update(float range) {
 
-	mTiny = FuzzyTriangle(22, -100, 0, 100);
-	mSmall = FuzzyTrapezoid(22, 250, 100, 150, 200);
-	mModerate = FuzzyTrapezoid(22, 150, 200, 250, 300);
-	mLarge = FuzzyGrade(22, 250, 300);
+	mTiny = FuzzyTriangle(6, -100, 0, 100);
+	mSmall = FuzzyTrapezoid(6, 25, 100, 150, 200);
+	mModerate = FuzzyTrapezoid(6, 150, 200, 250, 300);
+	mLarge = FuzzyGrade(6, 250, 300);
 
 	mClose = FuzzyTriangle(range, -300, 0, 300);
-	mMed = FuzzyTrapezoid(range, 100, 300, 500, 700);
+	mMedium = FuzzyTrapezoid(range, 100, 300, 500, 700);
 	mFar = FuzzyGrade(range, 500, 700);
 
 
@@ -99,6 +99,15 @@ void Fuzzy::update(float range) {
 	std::cout << "Med : " << mMed << std::endl;
 	std::cout << "High : " << mHigh << std::endl;
 
+	int nDeploy = (mLow * 10 + mMed * 30 + mHigh * 50) /
+		(mLow + mMed + mHigh);
+
+	if (nDeploy < 0) {
+		nDeploy = 0;
+	}
+
+	std::cout << "Deploy : " << nDeploy << std::endl;
+	std::cout << std::endl;
 
 
 	//if (mLow > mMedium)
